@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Montador de Móveis Profissional · Justinópolis & Ribeirão das Neves</title>
+  <meta name="description" content="Montagem e desmontagem de móveis com mais de 20 anos de experiência. Atendimento em Justinópolis, Ribeirão das Neves e região metropolitana de BH." />
+
+  <!-- Preload da imagem do hero -->
+  <link rel="preload" as="image" href="images/hero-cozinha.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- CSS modular -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-header" data-screen-label="Header">
+    <div class="container site-header__inner">
+      <a href="#topo" class="brand" aria-label="Página inicial">
+        <span class="brand__mark">M</span>
+        <span class="brand__name">
+          <span>Montador de Móveis</span>
+          <span>Profissional</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Navegação principal">
+        <a href="#servicos">Serviços</a>
+        <a href="#avaliacoes">Avaliações</a>
+        <a href="#orcamento">Orçamento</a>
+      </nav>
+
+      <a href="#orcamento" class="btn" data-wa="default">
+        <span class="btn__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2c-5.45 0-9.89 4.43-9.89 9.88 0 1.74.46 3.45 1.32 4.95L2 22l5.34-1.4a9.93 9.93 0 0 0 4.7 1.2h.01c5.45 0 9.89-4.43 9.89-9.88a9.85 9.85 0 0 0-2.89-7.01zm-7.01 15.2h-.01a8.2 8.2 0 0 1-4.18-1.14l-.3-.18-3.17.83.85-3.09-.2-.32a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.69-8.23 8.24-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.23-8.21 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.78.97-.14.17-.29.18-.54.06-.25-.12-1.05-.39-2-1.23a7.46 7.46 0 0 1-1.38-1.72c-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07s.88 2.4 1 2.57c.12.17 1.72 2.62 4.16 3.67.58.25 1.04.4 1.39.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+        </span>
+        Orçamento
+      </a>
+    </div>
+  </header>
+
+  <main id="topo">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" data-screen-label="Hero">
+    <div class="hero__media" aria-hidden="true">
+      <img src="images/hero-cozinha.png"
+           alt=""
+           loading="eager" />
+    </div>
+
+    <div class="container hero__content">
+      <span class="hero__tag">
+        <span class="hero__tag-dot"></span>
+        Justinópolis · Ribeirão das Neves · BH
+      </span>
+
+      <h1 class="hero__title">
+        Montador<br>de Móveis<br><em>Profissional</em>
+      </h1>
+
+      <p class="hero__sub">
+        Mais de 20 anos de experiência. Montagem, desmontagem e ajustes feitos por
+        quem já atendeu Casas Bahia, Magazine Luiza, Delar e Lojas Mobile.
+      </p>
+
+      <a href="#orcamento" class="hero__card" data-wa="default" aria-label="Solicitar orçamento no WhatsApp">
+        <div class="hero__field">
+          <span class="hero__field-label">Atendimento</span>
+          <span class="hero__field-value">Em até 24h</span>
+        </div>
+        <div class="hero__field">
+          <span class="hero__field-label">Resposta no WhatsApp</span>
+          <span class="hero__field-value">Em 15 minutos</span>
+        </div>
+        <span class="hero__card-cta">
+          <span class="btn__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2c-5.45 0-9.89 4.43-9.89 9.88 0 1.74.46 3.45 1.32 4.95L2 22l5.34-1.4a9.93 9.93 0 0 0 4.7 1.2h.01c5.45 0 9.89-4.43 9.89-9.88a9.85 9.85 0 0 0-2.89-7.01zm-7.01 15.2h-.01a8.2 8.2 0 0 1-4.18-1.14l-.3-.18-3.17.83.85-3.09-.2-.32a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.69-8.23 8.24-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.23-8.21 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.78.97-.14.17-.29.18-.54.06-.25-.12-1.05-.39-2-1.23a7.46 7.46 0 0 1-1.38-1.72c-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07s.88 2.4 1 2.57c.12.17 1.72 2.62 4.16 3.67.58.25 1.04.4 1.39.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+          </span>
+          Solicitar
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===================== CATEGORIES STRIP ===================== -->
+  <section class="cat-strip" aria-hidden="true">
+    <div class="container cat-strip__inner">
+      <span class="cat-strip__item">Guarda-roupa</span>
+      <span class="cat-strip__item">Cozinha</span>
+      <span class="cat-strip__item is-active">Montagem</span>
+      <span class="cat-strip__item">Camas</span>
+      <span class="cat-strip__item">Escritório</span>
+    </div>
+  </section>
+
+  <!-- ===================== SHOWCASE / CAROUSEL ===================== -->
+  <section class="showcase" id="servicos" data-screen-label="Serviços">
+    <div class="showcase__viewport">
+      <div class="showcase__track" data-carousel="services">
+
+        <article class="showcase-card">
+          <div class="showcase-card__img">
+            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&q=80&auto=format"
+                 alt="Quarto montado com guarda-roupa profissional" loading="lazy" />
+          </div>
+          <div class="showcase-card__content">
+            <span class="showcase-card__badge">Mais pedido</span>
+            <h3 class="showcase-card__title">Guarda-roupa & cama</h3>
+            <p class="showcase-card__meta">
+              <span>De 2h a 6h</span>
+              <span>Garantia no encaixe</span>
+            </p>
+          </div>
+        </article>
+
+        <article class="showcase-card">
+          <div class="showcase-card__img">
+            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&q=80&auto=format"
+                 alt="Cozinha planejada montada" loading="lazy" />
+          </div>
+          <div class="showcase-card__content">
+            <span class="showcase-card__badge">Especialidade</span>
+            <h3 class="showcase-card__title">Cozinha planejada</h3>
+            <p class="showcase-card__meta">
+              <span>Nivelamento</span>
+              <span>Ajuste de portas</span>
+            </p>
+          </div>
+        </article>
+
+        <article class="showcase-card">
+          <div class="showcase-card__img">
+            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=900&q=80&auto=format"
+                 alt="Sala de estar com sofá e estante" loading="lazy" />
+          </div>
+          <div class="showcase-card__content">
+            <span class="showcase-card__badge">Sala</span>
+            <h3 class="showcase-card__title">Rack, estante e sofá</h3>
+            <p class="showcase-card__meta">
+              <span>Fixação em parede</span>
+              <span>Limpeza ao fim</span>
+            </p>
+          </div>
+        </article>
+
+        <article class="showcase-card">
+          <div class="showcase-card__img">
+            <img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=900&q=80&auto=format"
+                 alt="Home office montado" loading="lazy" />
+          </div>
+          <div class="showcase-card__content">
+            <span class="showcase-card__badge">Home office</span>
+            <h3 class="showcase-card__title">Escritório completo</h3>
+            <p class="showcase-card__meta">
+              <span>Mesa e cadeira</span>
+              <span>Cabeamento</span>
+            </p>
+          </div>
+        </article>
+
+        <article class="showcase-card">
+          <div class="showcase-card__img">
+            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=900&q=80&auto=format"
+                 alt="Quarto pronto após mudança" loading="lazy" />
+          </div>
+          <div class="showcase-card__content">
+            <span class="showcase-card__badge">Mudança</span>
+            <h3 class="showcase-card__title">Desmontagem segura</h3>
+            <p class="showcase-card__meta">
+              <span>Etiquetagem</span>
+              <span>Embalo ferragens</span>
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+    <div class="showcase__dots" data-carousel-dots="services" aria-hidden="true"></div>
+  </section>
+
+  <!-- ===================== CATEGORIAS & INFORMAÇÃO ===================== -->
+  <section class="cats" data-screen-label="Categorias">
+    <div class="container">
+      <h2 class="cats__title"><span>Serviços &amp; Informações</span></h2>
+
+      <div class="cats__grid">
+
+        <article class="cat-tile">
+          <div class="cat-tile__icon">
+            <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/><path d="M7 4v16M17 4v16"/></svg>
+          </div>
+          <div class="cat-tile__body">
+            <h3 class="cat-tile__title">Montagem</h3>
+            <p class="cat-tile__desc">Móveis novos da loja, planejados, kits.</p>
+          </div>
+        </article>
+
+        <article class="cat-tile">
+          <div class="cat-tile__icon">
+            <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg>
+          </div>
+          <div class="cat-tile__body">
+            <h3 class="cat-tile__title">Desmontagem</h3>
+            <p class="cat-tile__desc">Pra mudança, reforma ou descarte.</p>
+          </div>
+        </article>
+
+        <article class="cat-tile">
+          <div class="cat-tile__icon">
+            <svg viewBox="0 0 24 24"><path d="M14 6l-8 8M14 6l4 4-8 8H6v-4l8-8z"/><path d="M14 6l3-3 4 4-3 3"/></svg>
+          </div>
+          <div class="cat-tile__body">
+            <h3 class="cat-tile__title">Reparos & ajustes</h3>
+            <p class="cat-tile__desc">Porta solta, gaveta caída, dobradiça.</p>
+          </div>
+        </article>
+
+        <article class="cat-tile">
+          <div class="cat-tile__icon">
+            <svg viewBox="0 0 24 24"><path d="M3 7h13l5 5v5H3z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+          </div>
+          <div class="cat-tile__body">
+            <h3 class="cat-tile__title">Mudanças</h3>
+            <p class="cat-tile__desc">Suporte ao remontar na casa nova.</p>
+          </div>
+        </article>
+
+        <article class="cat-tile">
+          <div class="cat-tile__icon">
+            <svg viewBox="0 0 24 24"><path d="M4 21V3h16v18"/><path d="M4 9h16M9 3v18"/></svg>
+          </div>
+          <div class="cat-tile__body">
+            <h3 class="cat-tile__title">Planejados</h3>
+            <p class="cat-tile__desc">Cozinha, dormitório, escritório.</p>
+          </div>
+        </article>
+
+        <article class="cat-tile">
+          <div class="cat-tile__icon">
+            <svg viewBox="0 0 24 24"><path d="M3 10l9-7 9 7"/><path d="M5 8v12h14V8"/><path d="M10 20v-6h4v6"/></svg>
+          </div>
+          <div class="cat-tile__body">
+            <h3 class="cat-tile__title">Fixação em parede</h3>
+            <p class="cat-tile__desc">Prateleiras, TV, espelhos, quadros.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== AVALIAÇÕES ===================== -->
+  <section class="reviews" id="avaliacoes" data-screen-label="Avaliações">
+    <div class="container">
+
+      <header class="reviews__head">
+        <p class="reviews__eyebrow">// Prova social</p>
+        <h2 class="reviews__title">O que dizem os clientes</h2>
+        <div class="reviews__summary">
+          <span class="reviews__summary-score">4.9</span>
+          <span class="reviews__summary-stars" aria-label="4.9 de 5 estrelas">★★★★★</span>
+          <span class="reviews__summary-text">87 avaliações · Google</span>
+        </div>
+      </header>
+
+      <div class="reviews__grid">
+
+        <article class="review-card">
+          <div class="review-card__head">
+            <div class="review-card__avatar avatar--A">J</div>
+            <div>
+              <div class="review-card__name">Juliana Andrade</div>
+              <div class="review-card__meta">há 2 semanas · Justinópolis</div>
+            </div>
+          </div>
+          <div class="review-card__stars" aria-label="5 estrelas">★★★★★</div>
+          <p class="review-card__text">
+            “Montou guarda-roupa de 6 portas no mesmo dia. Pontual, organizado
+            e ainda limpou tudo. Recomendo demais.”
+          </p>
+          <span class="review-card__source"><span class="google-g"></span> via Google</span>
+        </article>
+
+        <article class="review-card">
+          <div class="review-card__head">
+            <div class="review-card__avatar avatar--B">R</div>
+            <div>
+              <div class="review-card__name">Ricardo Faria</div>
+              <div class="review-card__meta">há 1 mês · Ribeirão das Neves</div>
+            </div>
+          </div>
+          <div class="review-card__stars" aria-label="5 estrelas">★★★★★</div>
+          <p class="review-card__text">
+            “Comprei a cozinha planejada e o entregador não montou. Chamei o
+            Lucas, em 4 horas estava tudo certinho. Preço justo.”
+          </p>
+          <span class="review-card__source"><span class="google-g"></span> via Google</span>
+        </article>
+
+        <article class="review-card">
+          <div class="review-card__head">
+            <div class="review-card__avatar avatar--C">M</div>
+            <div>
+              <div class="review-card__name">Mariana Costa</div>
+              <div class="review-card__meta">há 1 mês · Venda Nova</div>
+            </div>
+          </div>
+          <div class="review-card__stars" aria-label="5 estrelas">★★★★★</div>
+          <p class="review-card__text">
+            “Desmontou tudo pra mudança e identificou peça por peça. Na casa
+            nova foi só remontar. Profissional sério.”
+          </p>
+          <span class="review-card__source"><span class="google-g"></span> via Google</span>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FUNIL / ORÇAMENTO ===================== -->
+  <section class="funnel" id="orcamento" data-screen-label="Orçamento">
+    <div class="container funnel__inner">
+
+      <p class="funnel__eyebrow">// Em 4 passos</p>
+      <h2 class="funnel__title">Como solicitar seu orçamento</h2>
+      <p class="funnel__desc">
+        Clique no botão — a mensagem já vem com os 4 tópicos prontos pra você
+        completar. Quanto mais detalhe, mais rápido eu respondo com preço e data.
+      </p>
+
+      <ol class="funnel__steps">
+        <li class="step-pill">
+          <span class="step-pill__num">1</span>
+          <div>
+            <div class="step-pill__title">Móvel novo ou usado</div>
+            <div class="step-pill__desc">Saber a origem ajuda a estimar o tempo.</div>
+          </div>
+        </li>
+        <li class="step-pill">
+          <span class="step-pill__num">2</span>
+          <div>
+            <div class="step-pill__title">Bairro / cidade</div>
+            <div class="step-pill__desc">Confirma a área e o deslocamento.</div>
+          </div>
+        </li>
+        <li class="step-pill">
+          <span class="step-pill__num">3</span>
+          <div>
+            <div class="step-pill__title">Tipo de serviço</div>
+            <div class="step-pill__desc">Montagem, desmontagem ou ambos.</div>
+          </div>
+        </li>
+        <li class="step-pill">
+          <span class="step-pill__num">4</span>
+          <div>
+            <div class="step-pill__title">Fotos ou medidas</div>
+            <div class="step-pill__desc">Foto da embalagem ou manual já resolve.</div>
+          </div>
+        </li>
+      </ol>
+
+      <a href="#" class="btn btn--lg" data-wa="prequalification">
+        <span class="btn__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2c-5.45 0-9.89 4.43-9.89 9.88 0 1.74.46 3.45 1.32 4.95L2 22l5.34-1.4a9.93 9.93 0 0 0 4.7 1.2h.01c5.45 0 9.89-4.43 9.89-9.88a9.85 9.85 0 0 0-2.89-7.01zm-7.01 15.2h-.01a8.2 8.2 0 0 1-4.18-1.14l-.3-.18-3.17.83.85-3.09-.2-.32a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.69-8.23 8.24-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.23-8.21 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.78.97-.14.17-.29.18-.54.06-.25-.12-1.05-.39-2-1.23a7.46 7.46 0 0 1-1.38-1.72c-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07s.88 2.4 1 2.57c.12.17 1.72 2.62 4.16 3.67.58.25 1.04.4 1.39.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+        </span>
+        Enviar orçamento no WhatsApp
+      </a>
+
+      <p class="funnel__cta-meta">resposta média · em 15 minutos · dias úteis</p>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer" data-screen-label="Rodapé">
+    <div class="container site-footer__grid">
+
+      <div>
+        <a href="#topo" class="brand" style="margin-bottom: var(--space-4);">
+          <span class="brand__mark">M</span>
+          <span class="brand__name">
+            <span>Montador de Móveis</span>
+            <span>Profissional</span>
+          </span>
+        </a>
+        <p style="color: var(--color-text-dim); max-width: 36ch; margin-top: var(--space-4); font-size: var(--fs-small);">
+          Serviço local de montagem e desmontagem de móveis. Atendimento direto,
+          sem terceirização.
+        </p>
+      </div>
+
+      <div>
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="#" data-wa="default">WhatsApp · <span data-wa-display>(31) 99127-7892</span></a></li>
+          <li style="color: var(--color-text-dim);">Atendimento 24h via mensagem</li>
+          <li style="color: var(--color-text-dim);">Resposta média: 15 min</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Atendimento</h4>
+        <ul>
+          <li>Justinópolis</li>
+          <li>Ribeirão das Neves</li>
+          <li>Belo Horizonte (Norte)</li>
+          <li>Venda Nova · Vespasiano · Contagem</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="container site-footer__bottom">
+      <span>© 2026 Montador de Móveis Profissional</span>
+      <span>site by · Beyond Bits</span>
+    </div>
+  </footer>
+
+  <!-- FAB WhatsApp -->
+  <a href="#" class="fab-wa" data-wa="default" aria-label="Abrir WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2c-5.45 0-9.89 4.43-9.89 9.88 0 1.74.46 3.45 1.32 4.95L2 22l5.34-1.4a9.93 9.93 0 0 0 4.7 1.2h.01c5.45 0 9.89-4.43 9.89-9.88a9.85 9.85 0 0 0-2.89-7.01zm-7.01 15.2h-.01a8.2 8.2 0 0 1-4.18-1.14l-.3-.18-3.17.83.85-3.09-.2-.32a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.69-8.23 8.24-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.23-8.21 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.78.97-.14.17-.29.18-.54.06-.25-.12-1.05-.39-2-1.23a7.46 7.46 0 0 1-1.38-1.72c-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07s.88 2.4 1 2.57c.12.17 1.72 2.62 4.16 3.67.58.25 1.04.4 1.39.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.28z"/>
+    </svg>
+  </a>
+
+  <!-- JS modular -->
+  <script src="js/whatsapp.js" defer></script>
+  <script src="js/animations.js" defer></script>
+  <script src="js/carousel.js" defer></script>
+  <script src="js/reviews.js" defer></script>
+</body>
+</html>

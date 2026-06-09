@@ -1,0 +1,363 @@
+/* ============================================================
+   components.css — Botões, cards, badges, formas reutilizáveis
+   ============================================================ */
+
+/* ---------- Botões ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: 0.95rem 1.5rem;
+  min-height: 48px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border: 1.5px solid transparent;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+  white-space: nowrap;
+}
+
+.btn:hover {
+  background: var(--color-accent-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-yellow);
+}
+
+.btn:active { transform: translateY(0); }
+
+.btn--lg {
+  padding: 1.1rem 2rem;
+  min-height: 56px;
+  font-size: 1rem;
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text);
+  border-color: rgba(255,255,255,0.25);
+}
+
+.btn--ghost:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: var(--color-text-dim);
+  box-shadow: none;
+}
+
+.btn__icon {
+  width: 22px; height: 22px;
+  display: grid; place-items: center;
+}
+
+.btn__icon svg { width: 100%; height: 100%; fill: currentColor; }
+
+/* Floating WhatsApp */
+.fab-wa {
+  position: fixed;
+  right: clamp(1rem, 3vw, 1.5rem);
+  bottom: clamp(1rem, 3vw, 1.5rem);
+  z-index: 90;
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: var(--color-whatsapp);
+  color: white;
+  display: grid; place-items: center;
+  box-shadow:
+    0 10px 28px rgba(37, 211, 102, 0.45),
+    0 4px 10px rgba(0,0,0,0.15);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.fab-wa::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(37, 211, 102, 0.45);
+  animation: pulse-ring 2.4s ease-out infinite;
+}
+
+.fab-wa:hover { transform: scale(1.08); }
+
+.fab-wa svg { width: 30px; height: 30px; }
+
+@keyframes pulse-ring {
+  0%   { transform: scale(0.92); opacity: 0.9; }
+  100% { transform: scale(1.45); opacity: 0; }
+}
+
+/* ============================================================
+   Showcase Card — Card grande do carousel
+   ============================================================ */
+.showcase-card {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(260px, 78vw, 460px);
+  scroll-snap-align: center;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-bg-soft);
+  aspect-ratio: 3/4;
+  transition: transform var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out);
+}
+
+.showcase-card__img {
+  position: absolute; inset: 0;
+}
+
+.showcase-card__img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+.showcase-card__img::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.85) 100%);
+}
+
+.showcase-card__content {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: var(--space-6);
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.showcase-card__badge {
+  font-family: var(--font-mono);
+  font-size: var(--fs-tiny);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border-radius: var(--radius-pill);
+  width: fit-content;
+  font-weight: 600;
+}
+
+.showcase-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.showcase-card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-size: var(--fs-small);
+  color: rgba(255,255,255,0.85);
+}
+
+.showcase-card__meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.showcase-card__meta span::before {
+  content: "";
+  width: 5px; height: 5px;
+  background: var(--color-accent);
+  border-radius: 50%;
+}
+
+/* ============================================================
+   Category Tile — Grid de Serviços & Categorias
+   ============================================================ */
+.cat-tile {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  background: var(--color-bg-soft);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition:
+    background var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out);
+}
+
+.cat-tile:hover {
+  background: #232323;
+  border-color: rgba(246,195,36,0.30);
+  transform: translateY(-2px);
+}
+
+.cat-tile__icon {
+  width: 52px; height: 52px;
+  display: grid; place-items: center;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  color: var(--color-accent);
+}
+
+.cat-tile__icon svg {
+  width: 26px; height: 26px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cat-tile__body { display: flex; flex-direction: column; gap: 2px; }
+
+.cat-tile__title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+
+.cat-tile__desc {
+  font-size: var(--fs-small);
+  color: var(--color-text-dim);
+  line-height: 1.4;
+}
+
+/* ============================================================
+   Review Card
+   ============================================================ */
+.review-card {
+  background: white;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  transition: transform var(--dur-base) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out);
+}
+
+.review-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+}
+
+.review-card__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.review-card__avatar {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--color-bg);
+  flex-shrink: 0;
+}
+
+.review-card__name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+.review-card__meta {
+  font-size: var(--fs-tiny);
+  color: var(--color-text-dark-dim);
+  margin-top: 2px;
+}
+
+.review-card__stars {
+  color: #f5b400;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+}
+
+.review-card__text {
+  font-size: 0.92rem;
+  color: #2c2c28;
+  line-height: 1.55;
+  flex: 1;
+}
+
+.review-card__source {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-tiny);
+  color: var(--color-text-dark-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.google-g {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #ea4335, #fbbc04, #34a853, #4285f4, #ea4335);
+  display: inline-block;
+}
+
+/* Avatares coloridos */
+.avatar--A { background: #f6c324; }
+.avatar--B { background: #e07b4a; }
+.avatar--C { background: #6ea88f; }
+.avatar--D { background: #7d8ec4; }
+.avatar--E { background: #d96b8d; }
+.avatar--F { background: #b3a373; }
+
+/* ============================================================
+   Step Pill — Funil
+   ============================================================ */
+.step-pill {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-bg-soft);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  text-align: left;
+}
+
+.step-pill__num {
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.step-pill__title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+
+.step-pill__desc {
+  font-size: var(--fs-tiny);
+  color: var(--color-text-dim);
+  line-height: 1.4;
+}
