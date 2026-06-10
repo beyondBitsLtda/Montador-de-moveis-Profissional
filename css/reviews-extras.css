@@ -1,0 +1,168 @@
+/* ============================================================
+   css/reviews-extras.css
+   ------------------------------------------------------------
+   Estilos NOVOS para a integração com Google Reviews + Maps.
+   Mantido em arquivo separado pra não tocar no components.css
+   original. Carregado depois dele no <head>, então pode
+   sobrescrever qualquer regra existente quando preciso.
+   ============================================================ */
+
+/* ============================================================
+   REVIEWS — G colorido no canto dos cards + links clicáveis
+   ============================================================ */
+
+/* O card precisa ser âncora pro pseudo-elemento.
+   Sobrescreve sem problema se .review-card já tem position. */
+.review-card {
+  position: relative;
+}
+
+/* G colorido do Google no canto superior direito de cada card.
+   SVG inline em data-URI: zero requests extras, escala perfeita. */
+.review-card::after {
+  content: "";
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 18px;
+  height: 18px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'><path fill='%23FFC107' d='M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z'/><path fill='%23FF3D00' d='M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z'/><path fill='%234CAF50' d='M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0124 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z'/><path fill='%231976D2' d='M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 01-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z'/></svg>");
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* Nome do autor como link pro perfil no Google */
+.review-card__name--link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+.review-card__name--link:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+/* "via Google" no rodapé do card como link pro perfil do negócio */
+.review-card__source--link {
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+.review-card__source--link:hover {
+  color: var(--color-accent);
+}
+
+/* ============================================================
+   Botão "Ver todas no Google" no header da seção de reviews
+   ============================================================ */
+
+.reviews__cta-google {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: var(--space-4, 1rem);
+  padding: 10px 16px;
+  border-radius: var(--radius-pill, 999px);
+  background: #fff;
+  color: #1a1a1a;
+  font-weight: 600;
+  font-size: var(--fs-small, 0.875rem);
+  text-decoration: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.reviews__cta-google:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+.reviews__cta-google .g-mark {
+  width: 16px;
+  height: 16px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'><path fill='%23FFC107' d='M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z'/><path fill='%23FF3D00' d='M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z'/><path fill='%234CAF50' d='M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0124 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z'/><path fill='%231976D2' d='M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 01-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z'/></svg>");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* ============================================================
+   SEÇÃO MAPA
+   ============================================================ */
+
+.map-section {
+  padding: var(--space-8, 4rem) 0;
+  background: var(--color-bg, #0a0a0a);
+  color: var(--color-text, #f5f5f5);
+}
+
+.map-section__inner {
+  text-align: center;
+}
+
+.map-section__eyebrow {
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: var(--fs-small, 0.875rem);
+  color: var(--color-accent, #f6c324);
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-3, 0.75rem);
+}
+
+.map-section__title {
+  font-family: var(--font-display, "Archivo Black", sans-serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  text-transform: uppercase;
+  margin-bottom: var(--space-3, 0.75rem);
+  line-height: 1.1;
+}
+
+.map-section__desc {
+  max-width: 56ch;
+  margin: 0 auto var(--space-6, 2rem);
+  color: var(--color-text-dim, rgba(255, 255, 255, 0.7));
+  line-height: 1.6;
+}
+
+.map-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md, 12px);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: var(--space-5, 1.5rem);
+  background: #111; /* placeholder enquanto iframe carrega */
+}
+.map-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  /* "Tema escuro" gratuito no iframe do Google Maps. Se ficar
+     estranho no seu tema, é só remover esta linha que o mapa
+     volta às cores claras originais. */
+  filter: invert(0.92) hue-rotate(180deg) saturate(0.6);
+}
+
+.map-section__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: var(--radius-pill, 999px);
+  background: var(--color-accent, #f6c324);
+  color: #0a0a0a;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 180ms ease, background 180ms ease;
+}
+.map-section__cta:hover {
+  transform: translateY(-1px);
+  background: var(--color-accent-dark, #d9a800);
+}
+
+/* Mobile: mapa mais alto pra continuar legível em telas estreitas */
+@media (max-width: 600px) {
+  .map-frame {
+    aspect-ratio: 4 / 5;
+  }
+}
