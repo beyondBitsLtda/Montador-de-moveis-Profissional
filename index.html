@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="css/reset.css" />
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/reviews-extras.css" />
 </head>
 <body>
 
@@ -270,6 +271,13 @@
           <span class="reviews__summary-stars" aria-label="4.9 de 5 estrelas">★★★★★</span>
           <span class="reviews__summary-text">87 avaliações · Google</span>
         </div>
+        <a class="reviews__cta-google" href="#" data-google-link>
+          <span class="g-mark" aria-hidden="true"></span>
+          Ver todas no Google
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 17L17 7M9 7h8v8"/>
+          </svg>
+        </a>
       </header>
 
       <div class="reviews__grid">
@@ -323,6 +331,34 @@
         </article>
 
       </div>
+    </div>
+  </section>
+
+  <!-- ===================== MAPA ===================== -->
+  <section class="map-section" data-screen-label="Localização">
+    <div class="container map-section__inner">
+      <p class="map-section__eyebrow">// Onde atendemos</p>
+      <h2 class="map-section__title">Justinópolis &amp; região</h2>
+      <p class="map-section__desc">
+        Base em Justinópolis (Ribeirão das Neves). Atendemos também
+        Belo Horizonte, Venda Nova, Vespasiano e Contagem.
+      </p>
+
+      <div class="map-frame">
+        <iframe
+          src="https://maps.google.com/maps?q=Justin%C3%B3polis%2C+Ribeir%C3%A3o+das+Neves+-+MG&z=14&output=embed"
+          title="Mapa da área de atendimento"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen></iframe>
+      </div>
+
+      <a class="map-section__cta" href="#" data-google-link>
+        Abrir no Google Maps
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M7 17L17 7M9 7h8v8"/>
+        </svg>
+      </a>
     </div>
   </section>
 
@@ -437,6 +473,6 @@
   <script src="js/whatsapp.js" defer></script>
   <script src="js/animations.js" defer></script>
   <script src="js/carousel.js" defer></script>
-  <script src="js/reviews.js" defer></script>
+  <script src="js/reviews-loader.js" defer></script>
 </body>
 </html>
