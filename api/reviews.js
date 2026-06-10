@@ -1,123 +1,96 @@
 /* ============================================================
-   api/reviews.js — Vercel Serverless Function
+   api/reviews.js — Função serverless (Vercel)
    ------------------------------------------------------------
-   Proxy seguro entre o frontend e a Google Places API (New).
+   Chamada pela URL pública /api/reviews.
 
-   POR QUE existe:
-   - A chave da API NÃO PODE ficar no frontend (qualquer um copiaria
-     do DevTools e usaria pra gastar a sua cota).
-   - O Google bloqueia chamadas diretas do browser por CORS.
-   - Esta function roda no servidor da Vercel, lê a chave de uma
-     variável de ambiente, fala com o Google, e devolve só os dados
-     necessários para o frontend renderizar.
+   Fluxo:
+     1. Lê as env vars GOOGLE_PLACES_API_KEY e GOOGLE_PLACE_ID
+        (configuradas em Vercel → Settings → Environment Variables).
+     2. Chama a Google Places API (New) pedindo só os campos que o
+        frontend usa — o FieldMask determina o SKU/preço.
+     3. Normaliza a resposta no formato que js/reviews.js espera:
+        { name, rating, total, reviews: [{author, photo, rating, text, relativeTime}] }
+     4. Devolve com Cache-Control de 6h no CDN (s-maxage=21600),
+        então o Google é chamado ~4x por dia — independente do tráfego.
 
-   COMO funciona o cache:
-   - s-maxage=21600  → CDN da Vercel guarda 6 horas (a function
-                       só roda 4x por dia)
-   - stale-while-revalidate=86400 → por mais 24h, devolve o cache
-                       antigo enquanto busca um novo em background
-   - Resultado: dezenas de milhares de visitas/mês, ~120 chamadas
-     reais ao Google → ~$2-4/mês mesmo no SKU Enterprise
-
-   COMO trocar de lugar/local:
-   - Só mudar o PLACE_ID nas env vars da Vercel.
-   - Não precisa redeployar código.
+   Erros nunca quebram o site: o frontend mantém o fallback hardcoded
+   sempre que esta function não responder 200.
    ============================================================ */
 
-const PLACES_API_BASE = "https://places.googleapis.com/v1/places";
-
-// Mantém o body do response leve — devolve só o que o frontend usa.
-// (Princípio: API não vaza dados desnecessários, frontend não recebe lixo.)
-function shapeResponse(data) {
-  const reviews = Array.isArray(data.reviews) ? data.reviews : [];
-
-  return {
-    name: data.displayName?.text || "",
-    rating: typeof data.rating === "number" ? data.rating : 0,
-    total: typeof data.userRatingCount === "number" ? data.userRatingCount : 0,
-    reviews: reviews.map((r) => ({
-      // authorAttribution traz displayName, uri (link pro Google Maps
-      // do autor) e photoUri (foto do avatar do Google)
-      author: r.authorAttribution?.displayName || "Cliente",
-      authorUri: r.authorAttribution?.uri || null,
-      photo: r.authorAttribution?.photoUri || null,
-      rating: typeof r.rating === "number" ? r.rating : 5,
-      relativeTime: r.relativePublishTimeDescription || "",
-      // Quando pedimos languageCode=pt-BR, o Google entrega:
-      //   - text.text          → traduzido para PT (se não estava)
-      //   - originalText.text  → texto original do cliente
-      // Preferimos a tradução; se não existir, usamos o original.
-      text: r.text?.text || r.originalText?.text || "",
-      language: r.text?.languageCode || r.originalText?.languageCode || "pt",
-    })),
-  };
-}
-
-module.exports = async function handler(req, res) {
-  // Só aceitamos GET — nada de mutações por esta porta.
+export default async function handler(req, res) {
+  // Aceita só GET — bloqueia POST/PUT/etc.
   if (req.method !== "GET") {
     res.setHeader("Allow", "GET");
-    return res.status(405).json({ error: "Method not allowed" });
+    return res.status(405).json({ error: "Método não permitido" });
   }
 
-  const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
-  const PLACE_ID = process.env.GOOGLE_PLACE_ID;
+  const apiKey  = process.env.GOOGLE_PLACES_API_KEY;
+  const placeId = process.env.GOOGLE_PLACE_ID;
 
-  if (!API_KEY || !PLACE_ID) {
-    // Não vazamos qual está faltando — só registramos no log.
-    console.error(
-      "Missing env vars:",
-      !API_KEY && "GOOGLE_PLACES_API_KEY",
-      !PLACE_ID && "GOOGLE_PLACE_ID"
-    );
-    return res
-      .status(500)
-      .json({ error: "Configuração do servidor incompleta." });
+  if (!apiKey || !placeId) {
+    console.error("[api/reviews] Faltando env var(s): GOOGLE_PLACES_API_KEY e/ou GOOGLE_PLACE_ID");
+    return res.status(500).json({ error: "Configuração do servidor incompleta" });
   }
-
-  // languageCode + regionCode garantem que reviews em outros idiomas
-  // venham traduzidas para PT-BR, e que datas/formatação sigam o
-  // padrão brasileiro.
-  const url =
-    `${PLACES_API_BASE}/${encodeURIComponent(PLACE_ID)}` +
-    `?languageCode=pt-BR&regionCode=BR`;
 
   try {
-    const upstream = await fetch(url, {
+    // Places API (New) — endpoint "Get Place Details"
+    // languageCode + regionCode garantem reviews em PT-BR quando disponíveis
+    // e descrições de tempo relativas no formato BR ("há 2 semanas").
+    const url =
+      `https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}` +
+      `?languageCode=pt-BR&regionCode=BR`;
+
+    const googleRes = await fetch(url, {
+      method: "GET",
       headers: {
-        "X-Goog-Api-Key": API_KEY,
-        // Field mask é OBRIGATÓRIO na Places API (New) — sem ela, erro 400.
-        // Pedindo só o estritamente necessário pra ficar no SKU mais barato
-        // possível que comporta reviews.
-        "X-Goog-FieldMask":
-          "displayName,rating,userRatingCount,reviews",
+        "X-Goog-Api-Key": apiKey,
+        // O FieldMask define EXATAMENTE quais campos virão de volta.
+        // Pedir só o necessário diminui a fatura e o tempo de resposta.
+        "X-Goog-FieldMask": "id,displayName,rating,userRatingCount,reviews",
       },
     });
 
-    if (!upstream.ok) {
-      const detail = await upstream.text().catch(() => "");
-      console.error("Google Places API error:", upstream.status, detail);
-      return res
-        .status(502)
-        .json({ error: "Falha ao consultar avaliações no Google." });
+    if (!googleRes.ok) {
+      const bodyText = await googleRes.text().catch(() => "");
+      console.error("[api/reviews] Google respondeu", googleRes.status, bodyText);
+      return res.status(502).json({ error: "Falha ao consultar avaliações" });
     }
 
-    const data = await upstream.json();
-    const shaped = shapeResponse(data);
+    const place = await googleRes.json();
 
-    // CDN cacheia 6h, depois serve "stale" enquanto revalida por 24h.
-    // O browser do usuário NÃO cacheia (max-age=0) — sempre pega a
-    // versão fresca do CDN, então uma review nova aparece em até 6h.
+    // Normalização — adapta o formato cru do Google ao formato do frontend.
+    // Campos defensivos (?.) porque review individual pode vir sem foto, sem
+    // texto traduzido, etc.
+    const normalized = {
+      name:   place.displayName?.text || "",
+      rating: typeof place.rating === "number" ? place.rating : 0,
+      total:  typeof place.userRatingCount === "number" ? place.userRatingCount : 0,
+      reviews: Array.isArray(place.reviews)
+        ? place.reviews.map((r) => ({
+            author:       r.authorAttribution?.displayName || "Cliente",
+            photo:        r.authorAttribution?.photoUri || "",
+            rating:       typeof r.rating === "number" ? r.rating : 5,
+            // text.text vem com tradução PT-BR; originalText é o original
+            // (pode ser em outro idioma). Preferimos a versão traduzida.
+            text:         r.text?.text || r.originalText?.text || "",
+            relativeTime: r.relativePublishTimeDescription || "",
+          }))
+        : [],
+    };
+
+    // Cache de 6h no CDN da Vercel:
+    //   s-maxage=21600          → CDN guarda por 6h
+    //   stale-while-revalidate  → serve versão velha enquanto renova em background,
+    //                             então o visitante nunca espera o Google.
     res.setHeader(
       "Cache-Control",
-      "public, max-age=0, s-maxage=21600, stale-while-revalidate=86400"
+      "public, s-maxage=21600, stale-while-revalidate=86400"
     );
+    res.setHeader("Content-Type", "application/json; charset=utf-8");
 
-    return res.status(200).json(shaped);
+    return res.status(200).json(normalized);
   } catch (err) {
-    console.error("Unexpected error in /api/reviews:", err);
-    return res
-      .status(500)
-      .json({ error: "Erro inesperado ao buscar avaliações." });
+    console.error("[api/reviews] erro inesperado:", err);
+    return res.status(500).json({ error: "Erro interno" });
   }
-};
+}
