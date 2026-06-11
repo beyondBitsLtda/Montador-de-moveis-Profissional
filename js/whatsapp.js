@@ -31,8 +31,8 @@ Segue minhas informações:
 *3. Tipo de serviço*
 (montagem, desmontagem, ambos)
 
-*4. Fotos / medidas do móvel*
-(envie em seguida as fotos ou descreva)
+*4. Imagem do modelo e medidas do móvel*
+(envie a foto do móvel ou o link da loja, com as medidas)
 
 Aguardo retorno, obrigado!`
 };
