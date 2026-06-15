@@ -201,7 +201,8 @@ section {
 
 /* Cartão de busca/CTA flutuante */
 .hero__card {
-  margin-top: var(--space-7);
+  margin-top: var(--space-4); /* Reduz a distância do texto apenas no mobile */
+  margin-inline: auto;        /* Garante que o card fique travado ao centro */
   display: grid;
   background: var(--color-accent);
   color: var(--color-text-dark);
@@ -217,6 +218,7 @@ section {
 
 @media (min-width: 720px) {
   .hero__card {
+    margin-top: var(--space-7); /* Restaura o espaçamento original no desktop */
     grid-template-columns: 1fr 1fr auto;
     align-items: center;
     gap: var(--space-2);
