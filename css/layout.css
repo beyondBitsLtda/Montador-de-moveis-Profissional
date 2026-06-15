@@ -620,3 +620,14 @@ section {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%      { opacity: 0.5; transform: scale(1.3); }
 }
+
+/* Ajuste de espaçamento entre Carrossel e Serviços EXCLUSIVO PARA MOBILE */
+@media (max-width: 719px) {
+  .showcase {
+    padding-bottom: var(--space-4); /* Reduz o fundo do carrossel */
+  }
+  
+  .cats {
+    padding-top: var(--space-5); /* Reduz o topo das categorias */
+  }
+}
