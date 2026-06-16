@@ -2,8 +2,8 @@
   "name": "montador-moveis-profissional",
   "version": "1.0.0",
   "scripts": {
-    "build": "node scripts/build-css.js",
-    "dev": "node scripts/build-css.js --watch"
+    "build": "node js/scripts/build-css.js",
+    "dev": "node js/scripts/build-css.js --watch"
   },
   "dependencies": {
     "lightningcss": "^1.32.0"
