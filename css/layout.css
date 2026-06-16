@@ -146,8 +146,19 @@ section {
   min-height: inherit;
   display: flex;
   flex-direction: column;
+  /* Mobile: centralizado */
+  align-items: center;
+  text-align: center;
   justify-content: flex-end;
-  padding-block: var(--sp-9) var(--sp-8);
+  padding-block: var(--sp-9) var(--sp-7);
+}
+
+/* Desktop: alinha à esquerda dentro do container */
+@media (min-width: 680px) {
+  .hero__content {
+    align-items: flex-start;
+    text-align: left;
+  }
 }
 
 .hero__tag {
@@ -195,7 +206,7 @@ section {
 
 .hero__sub {
   margin-top: var(--sp-4);
-  max-width: 46ch;
+  max-width: 44ch;
   color: rgba(255,255,255,0.82);
   font-size: var(--fs-body);
   line-height: 1.6;
@@ -213,8 +224,10 @@ section {
   gap: var(--sp-3);
   box-shadow: var(--shadow-lg);
   width: 100%;
-  max-width: 680px;
+  max-width: 660px;
   grid-template-columns: 1fr;
+  /* centraliza o card no mobile sem empurrar pro canto */
+  align-self: stretch;
 }
 
 @media (min-width: 680px) {
@@ -222,6 +235,7 @@ section {
     margin-top: var(--sp-6);
     grid-template-columns: 1fr 1fr auto;
     align-items: center;
+    align-self: auto;
     gap: var(--sp-2);
     padding: var(--sp-2);
     padding-left: var(--sp-5);
