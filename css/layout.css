@@ -1,5 +1,5 @@
 /* ============================================================
-   layout.css — Containers, grids, seções
+   layout.css — Containers, grids, seções  (v2 · otimizado)
    ============================================================ */
 
 .container {
@@ -9,9 +9,14 @@
   padding-inline: var(--gutter);
 }
 
+/* Seções: padding padrão no desktop, mais compacto no mobile */
 section {
   position: relative;
-  padding-block: var(--space-9);
+  padding-block: var(--sp-9);         /* 80px desktop */
+}
+
+@media (max-width: 719px) {
+  section { padding-block: var(--sp-7); } /* 40px mobile */
 }
 
 /* ============================================================
@@ -21,17 +26,17 @@ section {
   position: absolute;
   inset: 0 0 auto 0;
   z-index: 50;
-  padding-block: var(--space-5);
+  padding-block: var(--sp-4);
 }
 
 .site-header.is-sticky {
   position: fixed;
-  background: rgba(14,14,14,0.92);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(14,14,14,0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border);
-  padding-block: var(--space-3);
-  animation: slide-down .3s var(--ease-out);
+  padding-block: var(--sp-3);
+  animation: slide-down .28s var(--ease-out);
 }
 
 @keyframes slide-down {
@@ -43,24 +48,25 @@ section {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-4);
+  gap: var(--sp-4);
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--sp-3);
   color: var(--color-text);
 }
 
 .brand__mark {
-  width: 40px; height: 40px;
+  width: 38px; height: 38px;
   background: var(--color-accent);
   color: var(--color-bg);
   display: grid; place-items: center;
   border-radius: var(--radius-sm);
   font-family: var(--font-display);
-  font-size: 1.1rem;
+  font-size: 1.05rem;
+  flex-shrink: 0;
 }
 
 .brand__name {
@@ -69,37 +75,35 @@ section {
   line-height: 1;
   font-family: var(--font-display);
   text-transform: uppercase;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   letter-spacing: 0.04em;
 }
 
 .brand__name span:last-child {
   font-family: var(--font-mono);
   font-weight: 400;
-  font-size: 0.6rem;
-  margin-top: 4px;
+  font-size: 0.58rem;
+  margin-top: 3px;
   color: var(--color-accent);
   letter-spacing: 0.16em;
 }
 
-.nav {
-  display: none;
-}
+.nav { display: none; }
 
 @media (min-width: 880px) {
   .nav {
     display: flex;
-    gap: var(--space-6);
-    font-size: 0.85rem;
+    gap: var(--sp-6);
+    font-size: 0.82rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     font-weight: 500;
   }
   .nav a {
     position: relative;
-    padding-block: var(--space-2);
+    padding-block: var(--sp-2);
     color: var(--color-text);
-    opacity: 0.85;
+    opacity: 0.8;
     transition: opacity var(--dur-fast);
   }
   .nav a:hover { opacity: 1; color: var(--color-accent); }
@@ -110,7 +114,7 @@ section {
    ============================================================ */
 .hero {
   position: relative;
-  min-height: clamp(560px, 92vh, 820px);
+  min-height: clamp(520px, 88vh, 780px);
   padding: 0;
   overflow: hidden;
   isolation: isolate;
@@ -131,12 +135,9 @@ section {
   content: "";
   position: absolute; inset: 0;
   background:
-    /* Strong vignette around text area */
-    radial-gradient(ellipse 90% 70% at 30% 80%, rgba(0,0,0,0.75) 0%, transparent 70%),
-    /* Top to bottom darkening */
-    linear-gradient(180deg, rgba(14,14,14,0.45) 0%, rgba(14,14,14,0.55) 50%, rgba(14,14,14,0.95) 100%),
-    /* Left side dark fade */
-    linear-gradient(90deg, rgba(14,14,14,0.55) 0%, rgba(14,14,14,0.15) 60%, transparent 100%);
+    radial-gradient(ellipse 90% 70% at 30% 80%, rgba(0,0,0,0.70) 0%, transparent 68%),
+    linear-gradient(180deg, rgba(14,14,14,0.40) 0%, rgba(14,14,14,0.50) 45%, rgba(14,14,14,0.92) 100%),
+    linear-gradient(90deg, rgba(14,14,14,0.50) 0%, rgba(14,14,14,0.10) 55%, transparent 100%);
 }
 
 .hero__content {
@@ -146,45 +147,45 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding-block: var(--space-9) var(--space-7);
+  padding-block: var(--sp-9) var(--sp-8);
 }
 
 .hero__tag {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
   background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.16);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-radius: var(--radius-pill);
   font-family: var(--font-mono);
   font-size: var(--fs-tiny);
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-text);
   width: fit-content;
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--sp-4);
 }
 
 .hero__tag-dot {
-  width: 8px; height: 8px;
+  width: 7px; height: 7px;
   background: var(--color-accent);
   border-radius: 50%;
-  box-shadow: 0 0 0 4px rgba(246,195,36,0.25);
+  box-shadow: 0 0 0 3px rgba(246,195,36,0.22);
 }
 
 .hero__title {
   font-family: var(--font-display);
   font-size: var(--fs-hero);
-  line-height: 0.92;
+  line-height: 0.94;
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--color-text);
   max-width: 14ch;
   text-wrap: balance;
-  text-shadow: 0 4px 30px rgba(0,0,0,0.55);
+  text-shadow: 0 4px 24px rgba(0,0,0,0.5);
 }
 
 .hero__title em {
@@ -193,37 +194,37 @@ section {
 }
 
 .hero__sub {
-  margin-top: var(--space-5);
-  max-width: 48ch;
-  color: rgba(255,255,255,0.85);
+  margin-top: var(--sp-4);
+  max-width: 46ch;
+  color: rgba(255,255,255,0.82);
   font-size: var(--fs-body);
+  line-height: 1.6;
 }
 
-/* Cartão de busca/CTA flutuante */
+/* Card CTA do Hero */
 .hero__card {
-  margin-top: var(--space-4); /* Reduz a distância do texto apenas no mobile */
-  margin-inline: auto;        /* Garante que o card fique travado ao centro */
+  margin-top: var(--sp-5);
   display: grid;
   background: var(--color-accent);
   color: var(--color-text-dark);
   border-radius: var(--radius-lg);
-  padding: var(--space-4);
+  padding: var(--sp-4);
   align-items: stretch;
-  gap: var(--space-3);
+  gap: var(--sp-3);
   box-shadow: var(--shadow-lg);
   width: 100%;
-  max-width: 720px;
+  max-width: 680px;
   grid-template-columns: 1fr;
 }
 
-@media (min-width: 720px) {
+@media (min-width: 680px) {
   .hero__card {
-    margin-top: var(--space-7); /* Restaura o espaçamento original no desktop */
+    margin-top: var(--sp-6);
     grid-template-columns: 1fr 1fr auto;
     align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2);
-    padding-left: var(--space-5);
+    gap: var(--sp-2);
+    padding: var(--sp-2);
+    padding-left: var(--sp-5);
     border-radius: var(--radius-pill);
   }
 }
@@ -232,28 +233,28 @@ section {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding: var(--space-2) var(--space-3);
+  padding: var(--sp-2) var(--sp-3);
   border-radius: var(--radius-md);
 }
 
-@media (min-width: 720px) {
+@media (min-width: 680px) {
   .hero__field {
-    padding: var(--space-3) var(--space-4);
+    padding: var(--sp-3) var(--sp-4);
     border-radius: var(--radius-pill);
   }
 }
 
 .hero__field-label {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.16em;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.55);
+  color: rgba(0,0,0,0.50);
 }
 
 .hero__field-value {
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   color: var(--color-text-dark);
 }
 
@@ -261,39 +262,38 @@ section {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2);
+  gap: var(--sp-2);
   background: var(--color-bg);
   color: var(--color-text);
-  padding: var(--space-4) var(--space-5);
+  padding: var(--sp-4) var(--sp-5);
   border-radius: var(--radius-pill);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   width: 100%;
   transition: background var(--dur-fast);
+  white-space: nowrap;
 }
 
-@media (min-width: 720px) {
-  .hero__card-cta {
-    width: auto;
-  }
+@media (min-width: 680px) {
+  .hero__card-cta { width: auto; }
 }
 
-.hero__card-cta:hover { background: #222; }
+.hero__card-cta:hover { background: #1e1e1e; }
 
 /* ============================================================
-   SECTION TABS — Atalhos minimalistas para seções
+   SECTION TABS
    ============================================================ */
 .section-tabs {
   background: var(--color-bg);
   border-bottom: 1px solid var(--color-border);
-  padding-block: var(--space-5);
+  padding-block: var(--sp-4);
 }
 
 .section-tabs__inner {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(var(--space-4), 6vw, var(--space-8));
+  gap: clamp(var(--sp-4), 5vw, var(--sp-7));
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -303,11 +303,11 @@ section {
 
 .section-tabs__item {
   position: relative;
-  padding-block: var(--space-2);
+  padding-block: var(--sp-2);
   font-family: var(--font-body);
   font-weight: 500;
-  font-size: 0.85rem;
-  letter-spacing: 0.12em;
+  font-size: 0.82rem;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
   color: var(--color-text-dim);
   white-space: nowrap;
@@ -317,8 +317,8 @@ section {
 .section-tabs__item::after {
   content: "";
   position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 1px;
+  left: 0; right: 0; bottom: -1px;
+  height: 2px;
   background: var(--color-accent);
   transform: scaleX(0);
   transform-origin: center;
@@ -326,35 +326,33 @@ section {
 }
 
 .section-tabs__item:hover,
-.section-tabs__item.is-active {
-  color: var(--color-text);
-}
+.section-tabs__item.is-active { color: var(--color-text); }
 
 .section-tabs__item:hover::after,
-.section-tabs__item.is-active::after {
-  transform: scaleX(1);
-}
+.section-tabs__item.is-active::after { transform: scaleX(1); }
 
 /* ============================================================
-   SHOWCASE — Carousel-style com card central + laterais
+   SHOWCASE — Carousel
    ============================================================ */
 .showcase {
   background: var(--color-bg);
-  padding-block: var(--space-7) var(--space-9);
+  padding-block: var(--sp-7) var(--sp-8);
   overflow: hidden;
 }
 
-.showcase__viewport {
-  position: relative;
+@media (max-width: 719px) {
+  .showcase { padding-block: var(--sp-5) var(--sp-6); }
 }
+
+.showcase__viewport { position: relative; }
 
 .showcase__track {
   display: flex;
-  gap: var(--space-5);
+  gap: var(--sp-4);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  padding-block: var(--space-5);
+  padding-block: var(--sp-4);
   padding-inline: var(--gutter);
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -365,14 +363,14 @@ section {
 .showcase__dots {
   display: flex;
   justify-content: center;
-  gap: var(--space-3);
-  margin-top: var(--space-5);
+  gap: var(--sp-2);
+  margin-top: var(--sp-4);
 }
 
 .showcase__dot {
-  width: 10px; height: 10px;
+  width: 8px; height: 8px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.16);
   border: none;
   cursor: pointer;
   transition: background var(--dur-fast), transform var(--dur-fast);
@@ -380,29 +378,33 @@ section {
 
 .showcase__dot.is-active {
   background: var(--color-accent);
-  transform: scale(1.2);
+  transform: scale(1.25);
 }
 
 /* ============================================================
-   CATEGORIAS & INFORMAÇÃO — Grid de ícones
+   CATEGORIAS — Grid de serviços
    ============================================================ */
 .cats {
   background: var(--color-bg);
-  padding-block: var(--space-9);
+  padding-block: var(--sp-9);
+}
+
+@media (max-width: 719px) {
+  .cats { padding-block: var(--sp-7); }
 }
 
 .cats__title {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 5vw, 3rem);
+  font-size: clamp(1.6rem, 4.5vw, 2.75rem);
   text-transform: uppercase;
   text-align: center;
   letter-spacing: -0.01em;
   color: var(--color-text);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--sp-7);
 }
 
 .cats__title span {
-  background: linear-gradient(180deg, var(--color-text) 0%, rgba(255,255,255,0.4) 100%);
+  background: linear-gradient(180deg, var(--color-text) 0%, rgba(255,255,255,0.38) 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -411,45 +413,49 @@ section {
 .cats__grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-4);
-  max-width: 900px;
+  gap: var(--sp-3);
+  max-width: 860px;
   margin-inline: auto;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 580px) {
   .cats__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-@media (min-width: 880px) {
+@media (min-width: 860px) {
   .cats__grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* ============================================================
-   AVALIAÇÕES (Google Reviews simulado)
+   AVALIAÇÕES
    ============================================================ */
 .reviews {
   background: var(--color-surface);
   color: var(--color-text-dark);
-  padding-block: var(--space-9);
+  padding-block: var(--sp-9);
+}
+
+@media (max-width: 719px) {
+  .reviews { padding-block: var(--sp-7); }
 }
 
 .reviews__head {
   text-align: center;
-  margin-bottom: var(--space-7);
+  margin-bottom: var(--sp-6);
 }
 
 .reviews__eyebrow {
   font-family: var(--font-mono);
   font-size: var(--fs-tiny);
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #b88a00;
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--sp-3);
 }
 
 .reviews__title {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 4.5vw, 2.75rem);
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
   text-transform: uppercase;
   letter-spacing: -0.01em;
   color: var(--color-text-dark);
@@ -458,9 +464,9 @@ section {
 .reviews__summary {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-4);
-  margin-top: var(--space-5);
-  padding: var(--space-3) var(--space-5);
+  gap: var(--sp-4);
+  margin-top: var(--sp-4);
+  padding: var(--sp-2) var(--sp-5);
   background: white;
   border-radius: var(--radius-pill);
   border: 1px solid var(--color-border-light);
@@ -468,13 +474,13 @@ section {
 
 .reviews__summary-score {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   line-height: 1;
 }
 
 .reviews__summary-stars {
   color: #f5b400;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
 }
 
 .reviews__summary-text {
@@ -484,34 +490,38 @@ section {
 
 .reviews__grid {
   display: grid;
-  gap: var(--space-5);
+  gap: var(--sp-4);
   grid-template-columns: 1fr;
 }
 
-@media (min-width: 720px) { .reviews__grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 980px) { .reviews__grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 700px) { .reviews__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 960px) { .reviews__grid { grid-template-columns: repeat(3, 1fr); } }
 
 /* ============================================================
-   FUNIL DE ORÇAMENTO
+   FUNIL / ORÇAMENTO
    ============================================================ */
 .funnel {
   background: var(--color-bg);
-  padding-block: var(--space-9);
+  padding-block: var(--sp-9);
   position: relative;
   overflow: hidden;
+}
+
+@media (max-width: 719px) {
+  .funnel { padding-block: var(--sp-7); }
 }
 
 .funnel::before {
   content: "";
   position: absolute;
-  inset: -20% -20% auto auto;
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(246,195,36,0.10), transparent 60%);
+  inset: -20% -10% auto auto;
+  width: 480px; height: 480px;
+  background: radial-gradient(circle, rgba(246,195,36,0.08), transparent 60%);
   pointer-events: none;
 }
 
 .funnel__inner {
-  max-width: 720px;
+  max-width: 680px;
   margin-inline: auto;
   text-align: center;
   position: relative;
@@ -520,40 +530,41 @@ section {
 .funnel__eyebrow {
   font-family: var(--font-mono);
   font-size: var(--fs-tiny);
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--color-accent);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--sp-3);
 }
 
 .funnel__title {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 5vw, 3rem);
+  font-size: clamp(1.6rem, 4.5vw, 2.75rem);
   text-transform: uppercase;
   letter-spacing: -0.01em;
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--sp-3);
 }
 
 .funnel__desc {
   color: var(--color-text-dim);
-  margin-bottom: var(--space-7);
-  max-width: 52ch;
+  margin-bottom: var(--sp-6);
+  max-width: 50ch;
   margin-inline: auto;
+  line-height: 1.6;
 }
 
 .funnel__steps {
   display: grid;
-  gap: var(--space-3);
-  margin-bottom: var(--space-7);
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-6);
   text-align: left;
 }
 
-@media (min-width: 720px) {
+@media (min-width: 680px) {
   .funnel__steps { grid-template-columns: repeat(2, 1fr); }
 }
 
 .funnel__cta-meta {
-  margin-top: var(--space-4);
+  margin-top: var(--sp-4);
   font-family: var(--font-mono);
   font-size: var(--fs-tiny);
   letter-spacing: 0.06em;
@@ -566,42 +577,40 @@ section {
 .site-footer {
   background: var(--color-bg);
   border-top: 1px solid var(--color-border);
-  padding-block: var(--space-7) var(--space-5);
+  padding-block: var(--sp-7) var(--sp-5);
 }
 
 .site-footer__grid {
   display: grid;
-  gap: var(--space-6);
-  margin-bottom: var(--space-7);
+  gap: var(--sp-6);
+  margin-bottom: var(--sp-6);
   grid-template-columns: 1fr;
 }
 
-@media (min-width: 720px) {
-  .site-footer__grid {
-    grid-template-columns: 1.4fr 1fr 1fr;
-  }
+@media (min-width: 700px) {
+  .site-footer__grid { grid-template-columns: 1.4fr 1fr 1fr; }
 }
 
 .site-footer h4 {
   font-family: var(--font-mono);
   font-size: var(--fs-tiny);
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--color-text-dim);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--sp-4);
   font-weight: 600;
 }
 
-.site-footer ul { display: grid; gap: var(--space-2); font-size: var(--fs-small); }
+.site-footer ul { display: grid; gap: var(--sp-2); font-size: var(--fs-small); }
 .site-footer a:hover { color: var(--color-accent); }
 
 .site-footer__bottom {
-  padding-top: var(--space-5);
+  padding-top: var(--sp-5);
   border-top: 1px solid var(--color-border);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: var(--space-3);
+  gap: var(--sp-2);
   font-size: var(--fs-tiny);
   color: var(--color-text-dim);
   font-family: var(--font-mono);
@@ -609,7 +618,7 @@ section {
 }
 
 /* ============================================================
-   Reveal hook — base sempre visível
+   Reveal hook
    ============================================================ */
 [data-reveal] {
   opacity: 1;
@@ -619,20 +628,4 @@ section {
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%      { opacity: 0.5; transform: scale(1.3); }
-}
-
-@media (max-width: 719px) {
-  /* Reduz o espaçamento geral de TODAS as seções no mobile */
-  section {
-    padding-block: var(--space-6); /* Reduzimos de space-9 para space-6 */
-  }
-
-  /* Ajustes finos específicos que já tínhamos feito */
-  .showcase {
-    padding-bottom: var(--space-4);
-  }
-  
-  .cats {
-    padding-top: var(--space-5);
-  }
 }
