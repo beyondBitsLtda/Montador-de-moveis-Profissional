@@ -618,3 +618,12 @@ section {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%      { opacity: 0.5; transform: scale(1.3); }
 }
+
+@media (max-width: 719px) {
+  .showcase {
+    padding-block: var(--space-5) var(--space-6);
+  }
+  .cats {
+    padding-block: var(--space-6);
+  }
+}
