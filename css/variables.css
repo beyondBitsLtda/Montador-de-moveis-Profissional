@@ -1,18 +1,16 @@
 /* ============================================================
    variables.css — Tokens de design
-   Centraliza cores, tipografia, espaçamentos e raios.
-   Altere AQUI para mudar a identidade visual do site inteiro.
    ============================================================ */
 
 :root {
-  /* ---------- Cores principais (identidade da marca) ---------- */
-  --color-bg:           #0e0e0e;   /* preto profundo (fundo principal) */
-  --color-bg-soft:      #1a1a1a;   /* preto suave (cards) */
-  --color-bg-warm:      #2a2522;   /* taupe escuro para variação */
-  --color-surface:      #faf8f3;   /* off-white (seções claras) */
+  /* ---------- Cores ---------- */
+  --color-bg:           #0e0e0e;
+  --color-bg-soft:      #1a1a1a;
+  --color-bg-warm:      #2a2522;
+  --color-surface:      #faf8f3;
 
-  --color-accent:       #f6c324;   /* amarelo da marca */
-  --color-accent-dark:  #d9a800;   /* amarelo escurecido (hover) */
+  --color-accent:       #f6c324;
+  --color-accent-dark:  #d9a800;
 
   --color-text:         #f5f5f0;
   --color-text-dim:     #9a9a93;
@@ -25,50 +23,59 @@
   --color-border-light: #e6e3d8;
 
   /* ---------- Tipografia ---------- */
-  --font-display: "Archivo Black", "Anton", "Impact", system-ui, sans-serif;
-  --font-body:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
-                   Roboto, sans-serif;
+  --font-display: "Archivo Black", "Impact", system-ui, sans-serif;
+  --font-body:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono:    "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
 
   /* Escala fluida */
-  --fs-hero:    clamp(2.4rem, 9vw, 6rem);
-  --fs-h1:      clamp(1.75rem, 5vw, 3rem);
-  --fs-h2:      clamp(1.4rem, 3.4vw, 2.25rem);
-  --fs-h3:      clamp(1.05rem, 2vw, 1.35rem);
-  --fs-body:    clamp(1rem, 1.1vw, 1.0625rem);
+  --fs-hero:    clamp(2.2rem, 8vw, 5.5rem);
+  --fs-h1:      clamp(1.6rem, 4.5vw, 2.75rem);
+  --fs-h2:      clamp(1.3rem, 3vw, 2rem);
+  --fs-h3:      clamp(1rem, 1.8vw, 1.25rem);
+  --fs-body:    clamp(0.9375rem, 1.1vw, 1rem);
   --fs-small:   0.875rem;
   --fs-tiny:    0.75rem;
 
-  /* ---------- Espaçamentos ---------- */
-  --space-1:  0.25rem;
-  --space-2:  0.5rem;
-  --space-3:  0.75rem;
-  --space-4:  1rem;
-  --space-5:  1.5rem;
-  --space-6:  2rem;
-  --space-7:  3rem;
-  --space-8:  4rem;
-  --space-9:  6rem;
-  --space-10: 8rem;
+  /* ---------- Espaçamentos (escala 8px) ---------- */
+  --sp-1:  0.25rem;   /*  4px */
+  --sp-2:  0.5rem;    /*  8px */
+  --sp-3:  0.75rem;   /* 12px */
+  --sp-4:  1rem;      /* 16px */
+  --sp-5:  1.5rem;    /* 24px */
+  --sp-6:  2rem;      /* 32px */
+  --sp-7:  2.5rem;    /* 40px */
+  --sp-8:  3.5rem;    /* 56px */
+  --sp-9:  5rem;      /* 80px */
+
+  /* aliases legados — mapeados pra nova escala */
+  --space-1: var(--sp-1);
+  --space-2: var(--sp-2);
+  --space-3: var(--sp-3);
+  --space-4: var(--sp-4);
+  --space-5: var(--sp-5);
+  --space-6: var(--sp-6);
+  --space-7: var(--sp-7);
+  --space-8: var(--sp-8);
+  --space-9: var(--sp-9);
 
   /* ---------- Raios ---------- */
-  --radius-sm:  6px;
-  --radius-md:  14px;
-  --radius-lg:  24px;
-  --radius-xl:  40px;
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-xl:   32px;
   --radius-pill: 999px;
 
   /* ---------- Layout ---------- */
-  --container-max: 1240px;
-  --gutter:        clamp(1.25rem, 4vw, 2.5rem);
+  --container-max: 1200px;
+  --gutter:        clamp(1rem, 4vw, 2rem);
 
   /* ---------- Motion ---------- */
   --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
-  --dur-fast:  180ms;
-  --dur-base:  320ms;
+  --dur-fast:  160ms;
+  --dur-base:  280ms;
 
   /* ---------- Shadow ---------- */
-  --shadow-md: 0 8px 24px rgba(0,0,0,0.25);
-  --shadow-lg: 0 24px 60px rgba(0,0,0,0.4);
-  --shadow-yellow: 0 12px 32px rgba(246, 195, 36, 0.25);
+  --shadow-md:     0 4px 16px rgba(0,0,0,0.22);
+  --shadow-lg:     0 16px 48px rgba(0,0,0,0.38);
+  --shadow-yellow: 0 8px 24px rgba(246, 195, 36, 0.28);
 }
