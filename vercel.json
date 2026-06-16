@@ -1,8 +1,5 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "functions": {
-    "api/reviews.js": {
-      "maxDuration": 10
-    }
-  }
+  "buildCommand": "npm run build",
+  "outputDirectory": ".",
+  "installCommand": "npm install"
 }
