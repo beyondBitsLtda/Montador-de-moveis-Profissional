@@ -1,0 +1,73 @@
+/* ============================================================
+   fonts.css — Self-hosted webfonts
+   ------------------------------------------------------------
+   Substitui o link do Google Fonts. Coloque os 7 arquivos
+   .woff2 em /fonts/ na raiz do projeto. Como baixar:
+   veja PERF.md, seção "Self-host das fontes".
+
+   Por que self-host:
+   - Elimina 2 round-trips de DNS (fonts.googleapis.com,
+     fonts.gstatic.com)
+   - Permite usar Cache-Control imutável (1 ano) — Google Fonts
+     usa cache curto (1 dia) por padrão
+   - Remove dependência de terceiros (privacidade + uptime)
+
+   Todas as fontes usam font-display: swap — o texto aparece
+   imediatamente na fonte fallback do sistema e troca pra real
+   quando carrega. Sem "FOIT" (flash of invisible text).
+   ============================================================ */
+
+/* ---------- Archivo Black (display, único peso) ---------- */
+@font-face {
+  font-family: 'Archivo Black';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/archivo-black-400.woff2') format('woff2');
+}
+
+/* ---------- Inter (corpo) ---------- */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/inter-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/inter-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/inter-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/inter-700.woff2') format('woff2');
+}
+
+/* ---------- JetBrains Mono (monoespaçada para eyebrows/labels) ---------- */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/jetbrains-mono-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/jetbrains-mono-500.woff2') format('woff2');
+}

@@ -77,6 +77,11 @@
        preload e caem no <img> de fallback dentro do <picture>.            -->
   <link rel="preload" as="image" href="images/hero-cozinha.webp" type="image/webp" fetchpriority="high" />
 
+  <!-- ═══════ Preconnect ═══════ -->
+  <!-- Acelera handshake com CDNs externas. O `crossorigin` no Unsplash
+       é necessário porque as imagens são servidas com CORS.            -->
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+
   <!-- ═══════ Fonts ═══════ -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -695,14 +700,44 @@
         da Grande BH.
       </p>
 
-      <div class="map-frame">
-        <iframe
-          src="https://maps.google.com/maps?q=Justin%C3%B3polis%2C+Ribeir%C3%A3o+das+Neves+-+MG&z=14&output=embed"
-          title="Mapa da área de atendimento em Justinópolis, Ribeirão das Neves"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          allowfullscreen></iframe>
+      <div class="map-frame" id="map-placeholder"
+           data-map-src="https://maps.google.com/maps?q=Justin%C3%B3polis%2C+Ribeir%C3%A3o+das+Neves+-+MG&z=14&output=embed"
+           style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); min-height: 320px; display: flex; align-items: center; justify-content: center; color: var(--color-text-dim); font-size: 0.875rem;">
+        <span aria-hidden="true">Carregando mapa…</span>
       </div>
+      <script>
+        // Lazy-load do iframe do Google Maps via IntersectionObserver.
+        // O iframe puxa ~200 KB de JS de terceiros — só carregamos quando
+        // o usuário rola para perto. rootMargin de 400px = pré-carrega
+        // antes de aparecer pra parecer instantâneo no UX.
+        (function () {
+          var ph = document.getElementById('map-placeholder');
+          if (!ph) return;
+          var loadMap = function () {
+            var iframe = document.createElement('iframe');
+            iframe.src = ph.dataset.mapSrc;
+            iframe.title = 'Mapa da área de atendimento em Justinópolis, Ribeirão das Neves';
+            iframe.loading = 'lazy';
+            iframe.referrerPolicy = 'no-referrer-when-downgrade';
+            iframe.allowFullscreen = true;
+            iframe.style.cssText = 'width:100%;height:100%;border:0;';
+            ph.innerHTML = '';
+            ph.appendChild(iframe);
+            ph.removeAttribute('style');
+          };
+          if ('IntersectionObserver' in window) {
+            var io = new IntersectionObserver(function (entries) {
+              entries.forEach(function (e) {
+                if (e.isIntersecting) { loadMap(); io.disconnect(); }
+              });
+            }, { rootMargin: '400px' });
+            io.observe(ph);
+          } else {
+            // Fallback pra navegadores muito antigos
+            loadMap();
+          }
+        })();
+      </script>
 
       <a class="map-section__cta" href="#" data-google-link rel="noopener">
         Abrir no Google Maps

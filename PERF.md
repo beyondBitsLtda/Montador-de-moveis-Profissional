@@ -5,17 +5,29 @@
 
 ---
 
-## ✦ Resumo
+## ✦ Histórico de pontuação (mobile)
 
-**Pontuação alvo:** sair de **59 (Desempenho mobile)** para **85-90+**.
+| Rodada | Performance | Observação |
+|---|---|---|
+| Antes do SEO | ~59 | Imagens 918 KiB, fonts render-blocking |
+| Após v2 (imgs + WebP) | **67** | Imagens caíram pra 234 KiB |
+| Após v3 (carousel + lazy map + preconnect) | **~75-82 esperado** | Reflow forçado eliminado |
+| **Após self-host das fontes** | **90+ esperado** | ⏳ depende de você |
+
+---
+
+## ✦ Resumo das mudanças
 
 | Item | Status | Ganho estimado |
 |---|---|---|
-| Hero convertido pra WebP | ✅ feito | +3 a 5 pts |
-| URLs do Unsplash em `w=600` (era 900) | ✅ feito | +10 a 15 pts |
-| `decoding="async"` em todas imgs | ✅ feito | +1 a 2 pts |
-| `<picture>` com fallback no hero | ✅ feito | — |
-| **Self-host das fontes Google** | ⏳ você | +8 a 12 pts |
+| Hero convertido pra WebP | ✅ v2 | +3 a 5 pts |
+| URLs do Unsplash em `w=600` | ✅ v2 | +10 a 15 pts |
+| `decoding="async"` em todas imgs | ✅ v2 | +1 a 2 pts |
+| `<picture>` com fallback no hero | ✅ v2 | — |
+| **Carousel sem reflow forçado** (IntersectionObserver) | ✅ v3 | +3 a 5 pts |
+| **Lazy-load do iframe do mapa** | ✅ v3 | +2 a 4 pts |
+| **`preconnect` ao Unsplash** | ✅ v3 | +1 a 2 pts |
+| **Self-host das fontes Google** | ⏳ você | **+10 a 15 pts** |
 | Critical CSS inline | ⏳ futuro | +5 a 8 pts |
 
 ---
