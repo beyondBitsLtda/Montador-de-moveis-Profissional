@@ -120,6 +120,63 @@
         max-width: none;
       }
       .showcase__dots { display: none; }
+
+      /* Reduz o gap vertical exagerado entre showcase e "Serviços &
+         Informações" em desktop. Em mobile o padding herdado fica.    */
+      .showcase { padding-block: var(--space-7) var(--space-5); }
+      .cats     { padding-block: var(--space-6) var(--space-9); }
+    }
+
+    /* ── Hover animations no showcase (só desktop com mouse real) ────
+       hover:hover + pointer:fine garante que touch screens — onde
+       hover é "fake" e gruda — não disparem o estado.                 */
+    @media (hover: hover) and (pointer: fine) {
+      .showcase-card {
+        transition:
+          transform 0.4s var(--ease-out),
+          box-shadow 0.4s var(--ease-out);
+      }
+      .showcase-card:hover {
+        transform: translateY(-6px);
+        box-shadow:
+          0 24px 48px rgba(0,0,0,0.45),
+          0 0 0 1px rgba(246,195,36,0.30);
+      }
+      .showcase-card .showcase-card__img img {
+        transition: transform 0.7s var(--ease-out);
+      }
+      .showcase-card:hover .showcase-card__img img {
+        transform: scale(1.08);
+      }
+      .showcase-card:hover .showcase-card__badge {
+        background: var(--color-accent-dark);
+      }
+      /* Setinha sutil aparecendo no canto do card no hover, como
+         "clique pra ver". Posiciona em cima do gradiente do card.     */
+      .showcase-card__content::after {
+        content: "→";
+        position: absolute;
+        top: var(--space-5);
+        right: var(--space-5);
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        background: var(--color-accent);
+        color: var(--color-bg);
+        border-radius: 50%;
+        font-family: var(--font-display);
+        font-size: 1rem;
+        opacity: 0;
+        transform: translateX(-8px);
+        transition:
+          opacity 0.4s var(--ease-out),
+          transform 0.4s var(--ease-out);
+      }
+      .showcase-card:hover .showcase-card__content::after {
+        opacity: 1;
+        transform: translateX(0);
+      }
     }
 
     /* FAQ — bloco discreto, sem competir com o funil. Veja SEO.md. */
