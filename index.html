@@ -73,7 +73,9 @@
   <link rel="manifest" href="/site.webmanifest" />
 
   <!-- ═══════ Preload do hero (LCP) ═══════ -->
-  <link rel="preload" as="image" href="images/hero-cozinha.png" fetchpriority="high" />
+  <!-- Preload aponta pro WebP. Browsers sem suporte (raros) ignoram o
+       preload e caem no <img> de fallback dentro do <picture>.            -->
+  <link rel="preload" as="image" href="images/hero-cozinha.webp" type="image/webp" fetchpriority="high" />
 
   <!-- ═══════ Fonts ═══════ -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -388,13 +390,17 @@
   <!-- ===================== HERO ===================== -->
   <section class="hero" data-screen-label="Hero" aria-label="Apresentação do serviço">
     <div class="hero__media">
-      <!-- Alt descritivo e keyword-rich (era vazio).
-           Width/height ajudam o CLS mesmo com object-fit:cover.        -->
-      <img src="images/hero-cozinha.png"
-           alt="Cozinha planejada montada profissionalmente em residência em Ribeirão das Neves"
-           width="1024" height="576"
-           loading="eager"
-           fetchpriority="high" />
+      <!-- WebP via <picture> (ganho ~25% de peso). Alt descritivo e
+           keyword-rich. width/height ajudam CLS mesmo com object-fit:cover. -->
+      <picture>
+        <source srcset="images/hero-cozinha.webp" type="image/webp" />
+        <img src="images/hero-cozinha.png"
+             alt="Cozinha planejada montada profissionalmente em residência em Ribeirão das Neves"
+             width="1024" height="576"
+             loading="eager"
+             fetchpriority="high"
+             decoding="async" />
+      </picture>
     </div>
 
     <div class="container hero__content">
@@ -449,9 +455,9 @@
 
         <article class="showcase-card">
           <div class="showcase-card__img">
-            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&q=80&auto=format"
+            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=600&q=75&auto=format,compress"
                  alt="Quarto montado com guarda-roupa profissional"
-                 width="900" height="1200" loading="lazy" />
+                 width="900" height="1200" loading="lazy" decoding="async" />
           </div>
           <div class="showcase-card__content">
             <span class="showcase-card__badge">Mais pedido</span>
@@ -465,9 +471,9 @@
 
         <article class="showcase-card">
           <div class="showcase-card__img">
-            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&q=80&auto=format"
+            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=75&auto=format,compress"
                  alt="Cozinha planejada montada com nivelamento e ajuste de portas"
-                 width="900" height="1200" loading="lazy" />
+                 width="900" height="1200" loading="lazy" decoding="async" />
           </div>
           <div class="showcase-card__content">
             <span class="showcase-card__badge">Especialidade</span>
@@ -481,9 +487,9 @@
 
         <article class="showcase-card">
           <div class="showcase-card__img">
-            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=900&q=80&auto=format"
+            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=75&auto=format,compress"
                  alt="Sala de estar com rack, estante e sofá montados"
-                 width="900" height="1200" loading="lazy" />
+                 width="900" height="1200" loading="lazy" decoding="async" />
           </div>
           <div class="showcase-card__content">
             <span class="showcase-card__badge">Sala</span>
@@ -497,9 +503,9 @@
 
         <article class="showcase-card">
           <div class="showcase-card__img">
-            <img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=900&q=80&auto=format"
+            <img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=600&q=75&auto=format,compress"
                  alt="Home office completo com mesa e cadeira montadas"
-                 width="900" height="1200" loading="lazy" />
+                 width="900" height="1200" loading="lazy" decoding="async" />
           </div>
           <div class="showcase-card__content">
             <span class="showcase-card__badge">Home office</span>
@@ -513,9 +519,9 @@
 
         <article class="showcase-card">
           <div class="showcase-card__img">
-            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=900&q=80&auto=format"
+            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=600&q=75&auto=format,compress"
                  alt="Quarto pronto após desmontagem segura para mudança"
-                 width="900" height="1200" loading="lazy" />
+                 width="900" height="1200" loading="lazy" decoding="async" />
           </div>
           <div class="showcase-card__content">
             <span class="showcase-card__badge">Mudança</span>
