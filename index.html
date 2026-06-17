@@ -92,11 +92,14 @@
 
   <!-- ═══════ CSS inline para a FAQ (mantém o build CSS sem mudanças) ═══════ -->
   <style>
-    /* ── Hero — corrige <picture> wrapper ────────────────────────────
-       O <picture> é inline por padrão; sem display:block ele encolhe a
-       área da imagem e o ::after (degradê escuro) cobre só essa fração
-       em vez do hero inteiro. Restaura o cover + degradê original.    */
-    .hero__media picture {
+    /* ── <picture> wrapper precisa ser display:block ──────────────────
+       <picture> é inline por padrão; sem isso ele encolhe e a <img>
+       width:100%/height:100% se dimensiona em relação à <picture>
+       (não ao container .hero__media / .showcase-card__img). Resultado
+       seria a imagem ocupando uma fração do espaço e o object-fit:cover
+       não cobrindo nada. Mesma raiz do bug que afetava o degradê do hero. */
+    .hero__media picture,
+    .showcase-card__img picture {
       display: block;
       width: 100%;
       height: 100%;
@@ -552,7 +555,7 @@
               <source srcset="images/cozinha-servico.webp" type="image/webp" />
               <img src="images/cozinha-servico.jpg"
                    alt="Cozinha planejada montada com armários cinzas e bancada de granito"
-                   width="1200" height="761" loading="lazy" decoding="async" />
+                   width="1200" height="778" loading="lazy" decoding="async" />
             </picture>
           </div>
           <div class="showcase-card__content">
@@ -571,7 +574,7 @@
               <source srcset="images/quarto-servico.webp" type="image/webp" />
               <img src="images/quarto-servico.jpg"
                    alt="Guarda-roupa branco com porta de correr e espelho montado em quarto"
-                   width="910" height="1200" loading="lazy" decoding="async" />
+                   width="890" height="1200" loading="lazy" decoding="async" />
             </picture>
           </div>
           <div class="showcase-card__content">
