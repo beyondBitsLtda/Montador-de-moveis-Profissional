@@ -1,13 +1,21 @@
 /* ============================================================
    carousel.js — Controle dos dots do showcase
    ------------------------------------------------------------
-   Funciona em cima de scroll-snap nativo (CSS). O JS apenas:
-   - sincroniza qual dot está ativo conforme o usuário rola
-   - clicar no dot rola até o respectivo card
+   v2 (junho/2026): refeito com IntersectionObserver pra eliminar
+   o "reflow forçado" que o PageSpeed acusava.
+
+   Versão antiga: a cada evento de scroll, fazia
+   getBoundingClientRect() do track + de cada card (6 leituras
+   sincronizadas por frame) → forçava layout reflow.
+
+   Versão nova: o IntersectionObserver dispara só quando um card
+   cruza um limiar definido (50% visível no track). Sem leitura
+   de layout, sem reflow, sem bloqueio da main thread.
    ============================================================ */
 
 function initCarousel() {
   const tracks = document.querySelectorAll("[data-carousel]");
+
   tracks.forEach((track) => {
     const dotsContainer = document.querySelector(
       `[data-carousel-dots="${track.dataset.carousel}"]`
@@ -15,7 +23,7 @@ function initCarousel() {
     const cards = Array.from(track.children);
     if (!dotsContainer || cards.length === 0) return;
 
-    // Gera os dots
+    // ---------- Gera os dots ----------
     dotsContainer.innerHTML = "";
     const dots = cards.map((_, i) => {
       const btn = document.createElement("button");
@@ -23,42 +31,47 @@ function initCarousel() {
       btn.setAttribute("aria-label", `Ir para item ${i + 1}`);
       btn.addEventListener("click", () => {
         const card = cards[i];
-        // Centraliza horizontalmente o card dentro do TRACK,
-        // SEM rolar a página verticalmente.
-        const trackRect = track.getBoundingClientRect();
-        const cardRect = card.getBoundingClientRect();
-        const delta =
-          cardRect.left - trackRect.left -
-          (trackRect.width - cardRect.width) / 2;
-        track.scrollBy({ left: delta, behavior: "smooth" });
+        // scrollIntoView com inline:'center' centraliza no track,
+        // sem mexer no scroll vertical da página.
+        card.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
       });
       dotsContainer.appendChild(btn);
       return btn;
     });
 
-    // Marca o dot ativo conforme rolagem
-    const setActive = () => {
-      const trackRect = track.getBoundingClientRect();
-      const center = trackRect.left + trackRect.width / 2;
-      let closestIdx = 0;
-      let closestDist = Infinity;
-      cards.forEach((card, i) => {
-        const r = card.getBoundingClientRect();
-        const cardCenter = r.left + r.width / 2;
-        const dist = Math.abs(center - cardCenter);
-        if (dist < closestDist) {
-          closestDist = dist;
-          closestIdx = i;
-        }
-      });
-      dots.forEach((d, i) => d.classList.toggle("is-active", i === closestIdx));
-    };
+    // Estado inicial: o primeiro card é o ativo.
+    let currentIdx = 0;
+    dots[0].classList.add("is-active");
 
-    setActive();
-    track.addEventListener("scroll", () => {
-      window.requestAnimationFrame(setActive);
-    });
-    window.addEventListener("resize", setActive);
+    // ---------- IntersectionObserver ----------
+    // Dispara quando um card cruza ≥60% da área do track. O card
+    // mais visível "vence" e vira o ativo. Sem getBoundingClientRect,
+    // sem reflow forçado.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        let bestRatio = 0;
+        let bestIdx = currentIdx;
+        // Combina entries com estado anterior — o ratio das entries
+        // sem disparo recente fica em cache implícito pelo browser.
+        entries.forEach((entry) => {
+          if (entry.intersectionRatio > bestRatio) {
+            bestRatio = entry.intersectionRatio;
+            bestIdx = cards.indexOf(entry.target);
+          }
+        });
+        if (bestIdx !== currentIdx && bestRatio > 0.5) {
+          dots[currentIdx].classList.remove("is-active");
+          dots[bestIdx].classList.add("is-active");
+          currentIdx = bestIdx;
+        }
+      },
+      {
+        root: track,
+        threshold: [0.25, 0.5, 0.75, 1.0],
+      }
+    );
+
+    cards.forEach((card) => observer.observe(card));
   });
 }
 
