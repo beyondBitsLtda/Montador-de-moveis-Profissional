@@ -22,17 +22,14 @@ const WA_MESSAGES = {
 
 Segue minhas informações:
 
-*1. Móvel novo ou usado?*
-(ex: novo, comprado na loja X)
-
-*2. Bairro / cidade*
+*1. Bairro / cidade*
 (ex: Justinópolis, Ribeirão das Neves)
 
-*3. Tipo de serviço*
-(montagem, desmontagem, ambos)
+*2. Fotos do móvel*
+(envie em seguida as fotos)
 
-*4. Imagem do modelo e medidas do móvel*
-(envie a foto do móvel ou o link da loja, com as medidas)
+*3. Medidas do móvel*
+(largura, altura, profundidade)
 
 Aguardo retorno, obrigado!`
 };
