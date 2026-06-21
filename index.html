@@ -129,11 +129,11 @@
       .showcase { padding-block: var(--space-7) var(--space-5); }
       .cats     { padding-block: var(--space-6) var(--space-9); }
 
-      /* Funil — 3 passos em 1 linha no desktop. O grid default do
-         layout.css é repeat(2,1fr), que com 3 itens deixa o 4º slot
-         vazio. 3 colunas iguais fica harmônico e centralizado.        */
+      /* Funil — 3 passos empilhados em coluna única, com largura ampla.
+         Sobrescreve o repeat(2,1fr) do layout.css (que deixava o 4º
+         slot vazio com 3 itens).                                       */
       .funnel__steps {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: 1fr;
       }
     }
 
