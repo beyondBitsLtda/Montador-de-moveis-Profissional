@@ -410,16 +410,8 @@ section {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-4);
-  max-width: 900px;
+  max-width: 560px;
   margin-inline: auto;
-}
-
-@media (min-width: 600px) {
-  .cats__grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (min-width: 880px) {
-  .cats__grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* ============================================================
