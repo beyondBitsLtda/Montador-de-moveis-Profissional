@@ -6,6 +6,7 @@
     "dev": "node js/scripts/build-css.js --watch"
   },
   "dependencies": {
+    "image-size": "^2.0.2",
     "lightningcss": "^1.32.0"
   }
 }
