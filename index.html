@@ -217,6 +217,107 @@
       font-size: var(--fs-small);
       line-height: 1.6;
     }
+
+    /* ═══════ Galeria de fotos (modal) ═══════ */
+    .showcase-card { position: relative; }
+    .showcase-card__open {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      background: transparent; border: 0; padding: 0; margin: 0;
+      cursor: pointer; z-index: 2; border-radius: inherit;
+    }
+    .showcase-card__open:focus-visible {
+      outline: 3px solid var(--color-accent); outline-offset: -3px;
+    }
+    .showcase-card__cta {
+      display: inline-flex; align-items: center; gap: .4em;
+      margin-top: var(--space-2, .5rem);
+      font-family: var(--font-mono); font-size: var(--fs-tiny, .72rem);
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--color-accent);
+    }
+    .showcase-card__cta::before { content: "▦"; font-size: 1.05em; line-height: 1; }
+    .showcase-card__count { opacity: .7; }
+
+    .galeria {
+      position: fixed; inset: 0; z-index: 1000;
+      display: flex; align-items: flex-start; justify-content: center;
+      opacity: 0; transition: opacity .2s var(--ease-out, ease);
+      overscroll-behavior: contain;
+    }
+    .galeria.is-aberta { opacity: 1; }
+    .galeria[hidden] { display: none; }
+    .galeria__backdrop {
+      position: absolute; inset: 0;
+      background: rgba(8,8,10,.93); backdrop-filter: blur(2px);
+    }
+    .galeria__painel {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 1100px; max-height: 100dvh;
+      display: flex; flex-direction: column;
+      padding: max(env(safe-area-inset-top), 12px) 12px 12px;
+    }
+    .galeria__topo {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; padding: 4px 4px 12px;
+    }
+    .galeria__titulo {
+      font-family: var(--font-mono); font-size: 1rem; letter-spacing: .04em;
+      color: #fff; margin: 0; text-transform: uppercase;
+    }
+    .galeria__fechar, .lightbox__fechar, .lightbox__nav {
+      appearance: none; border: 0; cursor: pointer; color: #fff;
+      background: rgba(255,255,255,.10);
+      display: grid; place-items: center; border-radius: 999px; line-height: 1;
+      transition: background .15s ease;
+    }
+    .galeria__fechar { width: 44px; height: 44px; font-size: 28px; flex: 0 0 auto; }
+    .galeria__fechar:hover, .lightbox__fechar:hover, .lightbox__nav:hover { background: rgba(255,255,255,.20); }
+    .galeria__fechar:focus-visible, .lightbox__fechar:focus-visible,
+    .lightbox__nav:focus-visible, .galeria__item:focus-visible {
+      outline: 3px solid var(--color-accent); outline-offset: 2px;
+    }
+
+    .galeria__grid {
+      overflow-y: auto; -webkit-overflow-scrolling: touch;
+      padding: 4px 4px max(env(safe-area-inset-bottom), 12px);
+      display: grid; gap: 8px; grid-template-columns: repeat(2, 1fr);
+    }
+    @media (min-width: 560px) { .galeria__grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 860px) { .galeria__grid { grid-template-columns: repeat(4, 1fr); gap: 10px; } }
+    .galeria__item {
+      appearance: none; border: 0; padding: 0; margin: 0; cursor: pointer;
+      background: rgba(255,255,255,.05); border-radius: 10px; overflow: hidden;
+      aspect-ratio: 1 / 1;
+    }
+    .galeria__item img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform .3s var(--ease-out, ease);
+    }
+    @media (hover: hover) and (pointer: fine) { .galeria__item:hover img { transform: scale(1.06); } }
+    .galeria__vazia { color: rgba(255,255,255,.7); padding: 24px; text-align: center; grid-column: 1 / -1; }
+
+    .lightbox {
+      position: absolute; inset: 0; z-index: 2; display: grid; place-items: center;
+      background: rgba(0,0,0,.94); opacity: 0; transition: opacity .18s var(--ease-out, ease);
+    }
+    .lightbox.is-aberto { opacity: 1; }
+    .lightbox[hidden] { display: none; }
+    .lightbox__palco { margin: 0; width: 100%; height: 100%; display: grid; place-items: center; padding: 12px; cursor: zoom-out; }
+    .lightbox__img {
+      max-width: 100%; max-height: calc(100dvh - 24px);
+      width: auto; height: auto; object-fit: contain;
+      border-radius: 6px; user-select: none; cursor: default;
+    }
+    .lightbox__fechar { position: absolute; top: max(env(safe-area-inset-top), 10px); right: 10px; width: 46px; height: 46px; font-size: 30px; z-index: 3; }
+    .lightbox__nav { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; font-size: 30px; z-index: 3; }
+    .lightbox__nav--prev { left: 8px; }
+    .lightbox__nav--next { right: 8px; }
+    .lightbox__contador {
+      position: absolute; bottom: max(env(safe-area-inset-bottom), 12px); left: 50%;
+      transform: translateX(-50%); font-family: var(--font-mono); font-size: .85rem;
+      color: #fff; background: rgba(0,0,0,.45); padding: 4px 12px; border-radius: 999px;
+    }
+    @media (prefers-reduced-motion: reduce) { .galeria, .lightbox, .galeria__item img { transition: none; } }
   </style>
 
   <!-- ═══════════════════════════════════════════════════════════════════════
@@ -521,7 +622,7 @@
     <div class="showcase__viewport">
       <div class="showcase__track" data-carousel="services">
 
-        <article class="showcase-card">
+        <article class="showcase-card" data-galeria="cozinha">
           <div class="showcase-card__img">
             <picture>
               <source srcset="images/cozinha-servico.webp" type="image/webp" />
@@ -532,10 +633,13 @@
           </div>
           <div class="showcase-card__content">
             <h3 class="showcase-card__title">Móveis de cozinha</h3>
+            <span class="showcase-card__cta">Ver galeria <span class="showcase-card__count" aria-hidden="true"></span></span>
           </div>
+          <button class="showcase-card__open" type="button" data-galeria-open="cozinha"
+                  aria-label="Abrir galeria de fotos: móveis de cozinha"></button>
         </article>
 
-        <article class="showcase-card">
+        <article class="showcase-card" data-galeria="quarto">
           <div class="showcase-card__img">
             <picture>
               <source srcset="images/quarto-servico.webp" type="image/webp" />
@@ -546,10 +650,13 @@
           </div>
           <div class="showcase-card__content">
             <h3 class="showcase-card__title">Móveis de quarto</h3>
+            <span class="showcase-card__cta">Ver galeria <span class="showcase-card__count" aria-hidden="true"></span></span>
           </div>
+          <button class="showcase-card__open" type="button" data-galeria-open="quarto"
+                  aria-label="Abrir galeria de fotos: móveis de quarto"></button>
         </article>
 
-        <article class="showcase-card">
+        <article class="showcase-card" data-galeria="sala">
           <div class="showcase-card__img">
             <img srcset="images/sala.jfif"
                  alt="Sala de estar com rack e painel de televisão"
@@ -557,7 +664,10 @@
           </div>
           <div class="showcase-card__content">
             <h3 class="showcase-card__title">Móveis de sala</h3>
+            <span class="showcase-card__cta">Ver galeria <span class="showcase-card__count" aria-hidden="true"></span></span>
           </div>
+          <button class="showcase-card__open" type="button" data-galeria-open="sala"
+                  aria-label="Abrir galeria de fotos: móveis de sala"></button>
         </article>
 
       </div>
@@ -878,10 +988,34 @@
     </div>
   </footer>
 
+  <!-- ===================== GALERIA (modal de fotos) ===================== -->
+  <div class="galeria" id="galeria" role="dialog" aria-modal="true" aria-labelledby="galeria-titulo" hidden>
+    <div class="galeria__backdrop" data-galeria-close></div>
+    <div class="galeria__painel">
+      <header class="galeria__topo">
+        <h2 class="galeria__titulo" id="galeria-titulo">Galeria</h2>
+        <button class="galeria__fechar" type="button" data-galeria-close aria-label="Fechar galeria">&times;</button>
+      </header>
+      <div class="galeria__grid" data-galeria-grid></div>
+    </div>
+
+    <!-- Foto ampliada -->
+    <div class="lightbox" data-lightbox hidden>
+      <button class="lightbox__fechar" type="button" data-lightbox-close aria-label="Fechar foto">&times;</button>
+      <button class="lightbox__nav lightbox__nav--prev" type="button" data-lightbox-prev aria-label="Foto anterior">&#8249;</button>
+      <figure class="lightbox__palco">
+        <img class="lightbox__img" data-lightbox-img alt="" />
+      </figure>
+      <button class="lightbox__nav lightbox__nav--next" type="button" data-lightbox-next aria-label="Próxima foto">&#8250;</button>
+      <span class="lightbox__contador" data-lightbox-contador aria-live="polite"></span>
+    </div>
+  </div>
+
   <!-- JS modular -->
   <script src="js/whatsapp.js" defer></script>
   <script src="js/animations.js" defer></script>
   <script src="js/carousel.js" defer></script>
   <script src="js/reviews-loader.js" defer></script>
+  <script src="js/galeria.js" defer></script>
 </body>
 </html>
