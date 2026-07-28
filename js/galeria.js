@@ -1,12 +1,16 @@
 /* ============================================================
    galeria.js — Galerias de fotos por serviço (Cozinha/Quarto/Sala)
    ------------------------------------------------------------
+   Layout: masonry (estilo Unsplash/Pinterest) via CSS columns —
+   cada foto mantém a proporção original, sem corte em quadrado.
    Performance:
    - As FOTOS não carregam junto com a página. No load, só um JSON
      minúsculo (galeria-manifest.json) é buscado em idle — zero
      imagem baixada até a galeria abrir.
    - Ao abrir, o grid usa loading="lazy": só as miniaturas visíveis
      baixam; o resto vem conforme rola.
+   - Cada <img> recebe width/height do manifesto: o navegador reserva
+     o espaço exato e o masonry não "pula" enquanto carrega (CLS baixo).
    - O lightbox baixa a foto ampliada sob demanda e faz preload
      apenas da anterior e da próxima.
    O manifesto é gerado no build varrendo as pastas do repo, então
@@ -21,7 +25,7 @@
   let manifestPromise = null;   // dedup de fetch concorrente
 
   // Estado do lightbox
-  let fotosAtuais = [];
+  let fotosAtuais = [];         // array de { src, w?, h? }
   let idxAtual = 0;
   let ultimoFoco = null;        // devolve o foco ao fechar (a11y)
 
@@ -36,6 +40,11 @@
   const lbImg      = $("[data-lightbox-img]", galeria);
   const lbPalco    = $(".lightbox__palco", galeria);
   const lbContador = $("[data-lightbox-contador]", galeria);
+
+  // Aceita tanto o formato novo ({src,w,h}) quanto string legada.
+  function normalizar(item) {
+    return typeof item === "string" ? { src: item } : item;
+  }
 
   /* ---------- manifesto ---------- */
   function carregarManifesto() {
@@ -61,7 +70,7 @@
     }).catch(() => { /* silencioso: cards seguem sem contagem */ });
   }
 
-  /* ---------- grid ---------- */
+  /* ---------- grid (masonry) ---------- */
   function montarGrid(key) {
     const info = manifest[key];
     tituloEl.textContent = (info && info.titulo) || "Galeria";
@@ -73,18 +82,20 @@
       return;
     }
 
-    fotosAtuais = info.fotos;
+    fotosAtuais = info.fotos.map(normalizar);
     const frag = document.createDocumentFragment();
-    info.fotos.forEach((src, i) => {
+    fotosAtuais.forEach((foto, i) => {
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "galeria__item";
-      btn.setAttribute("aria-label", "Ampliar foto " + (i + 1) + " de " + info.fotos.length);
+      btn.setAttribute("aria-label", "Ampliar foto " + (i + 1) + " de " + fotosAtuais.length);
       const img = document.createElement("img");
-      img.src = src;
+      img.src = foto.src;
       img.alt = info.titulo + " — foto " + (i + 1);
       img.loading = "lazy";
       img.decoding = "async";
+      // width/height reservam o espaço exato → masonry não "pula".
+      if (foto.w && foto.h) { img.width = foto.w; img.height = foto.h; }
       btn.appendChild(img);
       btn.addEventListener("click", () => abrirLightbox(i));
       frag.appendChild(btn);
@@ -124,13 +135,13 @@
   function preload(i) {
     if (i < 0 || i >= fotosAtuais.length) return;
     const im = new Image();
-    im.src = fotosAtuais[i];
+    im.src = fotosAtuais[i].src;
   }
 
   function mostrarFoto(i) {
     if (!fotosAtuais.length) return;
     idxAtual = (i + fotosAtuais.length) % fotosAtuais.length; // circular
-    lbImg.src = fotosAtuais[idxAtual];
+    lbImg.src = fotosAtuais[idxAtual].src;
     lbImg.alt = tituloEl.textContent + " — foto " + (idxAtual + 1);
     lbContador.textContent = (idxAtual + 1) + " / " + fotosAtuais.length;
     preload(idxAtual + 1);
