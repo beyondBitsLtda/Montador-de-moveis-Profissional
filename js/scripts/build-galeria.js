@@ -7,10 +7,23 @@
  * Roda no `npm run build` ANTES do build-css. Assim, toda foto que o
  * cliente subir para Cozinha/ Quarto/ Sala/ entra na galeria no próximo
  * deploy — sem editar código, sem digitar nome de arquivo.
+ *
+ * Para cada foto, lê a dimensão (largura/altura) com `image-size` — ela
+ * só lê o cabeçalho do arquivo, não processa a imagem. Com a proporção
+ * conhecida, o layout masonry no cliente reserva o espaço exato e não
+ * "pula" enquanto as fotos carregam (CLS baixo = bom PageSpeed).
  */
 
 const fs   = require('fs');
 const path = require('path');
+
+// image-size é opcional: se faltar, a galeria funciona sem dimensões
+// (só perde a reserva de espaço). Suporta a API nova (named) e a antiga.
+let imageSize = null;
+try {
+  const mod = require('image-size');
+  imageSize = typeof mod === 'function' ? mod : mod.imageSize;
+} catch (e) { /* segue sem dimensões */ }
 
 // js/scripts/ → sobe 2 níveis → raiz do projeto (mesmo padrão do build-css)
 const ROOT = path.resolve(__dirname, '../..');
@@ -33,6 +46,15 @@ const log = {
   sep: ()=>console.log(`${c.dim}${'\u2500'.repeat(52)}${c.reset}`),
 };
 
+function dimensao(absPath) {
+  if (!imageSize) return null;
+  try {
+    const r = imageSize(fs.readFileSync(absPath));
+    if (r && r.width && r.height) return { w: r.width, h: r.height };
+  } catch (e) { /* arquivo corrompido/formato exótico: ignora dimensão */ }
+  return null;
+}
+
 function listar(dir) {
   const abs = path.join(ROOT, dir);
   if (!fs.existsSync(abs)) return null;
@@ -40,13 +62,18 @@ function listar(dir) {
     .filter((name) => !name.startsWith('.'))
     .filter((name) => IMG_RE.test(name))
     .sort((a, b) => a.localeCompare(b, 'pt', { numeric: true }))
-    // encodeURI cuida de espaços/acentos; a "/" continua sendo "/".
-    .map((name) => encodeURI(`${dir}/${name}`));
+    .map((name) => {
+      // encodeURI cuida de espaços/acentos; a "/" continua sendo "/".
+      const src = encodeURI(`${dir}/${name}`);
+      const dim = dimensao(path.join(abs, name));
+      return dim ? { src, w: dim.w, h: dim.h } : { src };
+    });
 }
 
 function build() {
   console.log(`\n${c.bold}${c.cyan}  \uD83D\uDDBC  Galeria Build${c.reset}\n`);
   log.sep();
+  if (!imageSize) log.warn('image-size ausente — galeria sem reserva de espaco (rode: npm install image-size)');
 
   const manifest = {};
   let total = 0;
