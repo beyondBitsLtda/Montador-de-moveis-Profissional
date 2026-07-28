@@ -2,7 +2,7 @@
   "name": "montador-moveis-profissional",
   "version": "1.0.0",
   "scripts": {
-    "build": "node js/scripts/build-css.js",
+    "build": "node js/scripts/build-galeria.js && node js/scripts/build-css.js",
     "dev": "node js/scripts/build-css.js --watch"
   },
   "dependencies": {
