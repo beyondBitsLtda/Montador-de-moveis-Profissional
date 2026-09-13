@@ -48,7 +48,7 @@
                     ? nav.connectEnd - nav.secureConnectionStart : 0;
 
     item('TTFB (tempo até 1º byte)',   ms(ttfb),    nota(ttfb, 200, 500),
-      ttfb > 500 ? 'Alto para Vercel. Verifique região do deploy e cache headers.' : 'Dentro do esperado para Vercel.');
+      ttfb > 500 ? 'Alto para o GitHub Pages. Verifique o peso do HTML e a rede do cliente.' : 'Dentro do esperado para o GitHub Pages.');
 
     item('DNS lookup',                 ms(dns),     nota(dns, 30, 100),
       dns > 100 ? 'DNS lento — considere preconnect ou DNS prefetch para domínios externos.' : null);
@@ -223,8 +223,8 @@
       const nome = e.name.split('/').pop().split('?')[0].slice(0, 45);
       console.log(`        → ${nome} (${kb(e.transferSize)})`);
     });
-    console.log(`\n  %c💡 No Vercel, adicione um vercel.json com Cache-Control para assets estáticos:`, 'color:#999');
-    console.log(`  %c   { "headers": [{ "source": "/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] }] }`, 'color:#666;font-size:10px');
+    console.log(`\n  %c💡 O GitHub Pages não deixa configurar Cache-Control. Só com um proxy (ex: Cloudflare) na frente:`, 'color:#999');
+    console.log(`  %c   Sem proxy, a alternativa é versionar o nome dos arquivos (bundle.a1b2c3.css) e deixar o cache curto do Pages trabalhar.`, 'color:#666;font-size:10px');
   } else {
     console.log('  ✅  Recursos carregando do cache do browser. Cache funcionando!');
   }
@@ -283,7 +283,7 @@
   console.log('  3. Fazer bundle dos 5 CSS em 1 arquivo só (economiza 4 requests)');
   console.log('');
   console.log('%c  Prioridade MÉDIA:', 'color:#f6c324;font-weight:bold');
-  console.log('  4. Adicionar vercel.json com Cache-Control para assets estáticos');
+  console.log('  4. Cache-Control longo: só com proxy (Cloudflare) na frente do Pages');
   console.log('  5. Confirmar display=swap nas fontes do Google');
   console.log('  6. Lazy-load em imagens do carousel (abaixo do fold)');
   console.log('');

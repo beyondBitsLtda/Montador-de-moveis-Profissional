@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "build": "node js/scripts/build-galeria.js && node js/scripts/build-css.js",
-    "dev": "node js/scripts/build-css.js --watch"
+    "dev": "node js/scripts/build-css.js --watch",
+    "reviews": "node js/scripts/fetch-reviews.js"
   },
   "dependencies": {
     "image-size": "^2.0.2",

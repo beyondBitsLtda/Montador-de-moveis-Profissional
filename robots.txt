@@ -1,11 +1,8 @@
 # robots.txt — Montador de Móveis Profissional
-# https://montador-pro.vercel.app/
+# https://beyondbitsltda.github.io/Montador-de-moveis-Profissional/
 
 User-agent: *
 Allow: /
-
-# Bloquear apenas o endpoint da API serverless (sem valor para indexação)
-Disallow: /api/
 
 # Crawlers de IA / scrapers comerciais — opcional, descomente se quiser bloquear.
 # User-agent: GPTBot
@@ -16,4 +13,4 @@ Disallow: /api/
 # Disallow: /
 
 # Sitemap
-Sitemap: https://montador-pro.vercel.app/sitemap.xml
+Sitemap: https://beyondbitsltda.github.io/Montador-de-moveis-Profissional/sitemap.xml

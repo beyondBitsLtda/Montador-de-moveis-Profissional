@@ -20,7 +20,9 @@
 (function () {
   "use strict";
 
-  const MANIFEST_URL = "/galeria-manifest.json";
+  // Relativo de proposito: no GitHub Pages o site vive em subpasta,
+  // entao "/galeria-manifest.json" cairia na raiz do dominio e daria 404.
+  const MANIFEST_URL = "galeria-manifest.json";
   let manifest = null;          // cache em memória
   let manifestPromise = null;   // dedup de fetch concorrente
 

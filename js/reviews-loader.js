@@ -1,12 +1,12 @@
 /* ============================================================
    js/reviews-loader.js — Carrega e renderiza avaliações reais
    ------------------------------------------------------------
-   Chama o backend em /api/google-places (proxy para a Google
-   Places API) e, em caso de sucesso, substitui as 3 reviews
-   hardcoded no HTML por até 5 reviews reais + nota agregada
-   verdadeira.
+   Lê reviews.json — snapshot estático das avaliações, gerado
+   por js/scripts/fetch-reviews.js — e, em caso de sucesso,
+   substitui as 3 reviews hardcoded no HTML por até 5 reviews
+   reais + nota agregada verdadeira.
 
-   Progressive enhancement: se a API cair, env vars sumirem ou
+   Progressive enhancement: se o arquivo sumir, vier malformado ou
    o usuário estiver offline, o HTML original permanece visível.
    Nunca mostra "loading vazio" ou tela quebrada.
    ============================================================ */
@@ -14,9 +14,10 @@
 (function () {
   "use strict";
 
-  // Endpoint do nosso proxy serverless. Se renomear api/google-places.js,
-  // tem que atualizar esta string também — o nome do arquivo VIRA o path.
-  const API_URL = "/api/google-places";
+  // Caminho RELATIVO de propósito: no GitHub Pages o site é servido de
+  // /Montador-de-moveis-Profissional/, então "/reviews.json" cairia na raiz
+  // do domínio e daria 404. Para regravar o arquivo: npm run reviews.
+  const API_URL = "reviews.json";
   const AVATAR_VARIANTS = ["A", "B", "C", "D", "E", "F"];
 
   /* -------- Utilitários -------- */
@@ -138,7 +139,7 @@
     try {
       const r = await fetch(API_URL, { cache: "default" });
       if (!r.ok) {
-        console.warn("[reviews-loader] API respondeu", r.status, "- mantendo fallback");
+        console.warn("[reviews-loader] reviews.json respondeu", r.status, "- mantendo fallback");
         return;
       }
 

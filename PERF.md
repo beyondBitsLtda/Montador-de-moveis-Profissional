@@ -157,38 +157,30 @@ E **substitua por**:
 
 ```html
 <!-- ═══════ Fonts (self-hosted) ═══════ -->
-<link rel="preload" as="font" type="font/woff2" href="/fonts/archivo-black-400.woff2" crossorigin />
-<link rel="preload" as="font" type="font/woff2" href="/fonts/inter-400.woff2" crossorigin />
+<link rel="preload" as="font" type="font/woff2" href="fonts/archivo-black-400.woff2" crossorigin />
+<link rel="preload" as="font" type="font/woff2" href="fonts/inter-400.woff2" crossorigin />
 <link rel="stylesheet" href="css/fonts.css" />
 ```
 
 Os dois `<link rel="preload">` antecipam o download das fontes mais usadas above-the-fold (Archivo Black do hero, Inter 400 do corpo). As outras 5 fontes carregam normalmente via `@font-face`.
 
-### Passo 5 — Atualizar o `vercel.json` (cache imutável das fontes)
+### Passo 5 — Cache imutável das fontes (não se aplica mais)
 
-Adicione esse bloco ao array `headers`:
+Na Vercel esse passo adicionava um bloco de `Cache-Control` no `vercel.json`. **O GitHub Pages não permite configurar headers HTTP**, e o `vercel.json` foi removido na migração — não há o que fazer aqui.
 
-```json
-{
-  "source": "/fonts/(.*)",
-  "headers": [
-    { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
-    { "key": "Access-Control-Allow-Origin", "value": "*" }
-  ]
-}
-```
+As fontes vão usar o cache padrão do Pages, que é curto. Na prática isso custa pouco: as `woff2` são pequenas e só pesam na primeira visita. Se um dia isso incomodar, a saída é pôr um proxy (Cloudflare) na frente.
 
-Já existe um bloco parecido pra `/css/` e `/js/`. Esse é só pra `/fonts/`.
+Pule para o Passo 6.
 
 ### Passo 6 — Deploy e testar
 
 ```bash
-git add fonts/ css/fonts.css index.html vercel.json
+git add fonts/ css/fonts.css index.html
 git commit -m "perf: self-host webfonts"
 git push
 ```
 
-Aguarde o deploy da Vercel (~1 min), rode o PageSpeed Insights de novo. Deve subir 8-12 pontos.
+Aguarde o deploy do GitHub Pages (~1 min), rode o PageSpeed Insights de novo. Deve subir 8-12 pontos.
 
 ---
 
@@ -231,9 +223,9 @@ O iframe do mapa pesa ~200 KB (JS do Maps). Já tem `loading="lazy"` mas o ideal
 
 Trabalho: ~20 min. Ganho: 2-3 pts mobile.
 
-### Baixo — Pre-render no servidor
+### Baixo — Controle de cache e TTFB
 
-A Vercel suporta **Edge config** e cache de HTML inteiro. Não muda o score do Lighthouse mas o **TTFB** (Time To First Byte) cai pela metade. Bom pra UX e bom em condições de rede ruim.
+Não se aplica ao GitHub Pages: ele serve arquivos estáticos de um CDN, sem nenhuma camada de configuração. O TTFB já costuma ser bom. Para ir além (cache longo, headers próprios, HTML cacheado na borda) só colocando um proxy como o Cloudflare na frente do domínio.
 
 ---
 
@@ -247,7 +239,6 @@ A Vercel suporta **Edge config** e cache de HTML inteiro. Não muda o score do L
 **Falta você fazer** (mais impactante):
 - Baixar os 7 woff2 do google-webfonts-helper, jogar em `/fonts/`
 - Trocar 4 linhas no `<head>` do `index.html`
-- Adicionar 1 bloco no `vercel.json`
 
 Tempo total estimado: **15-20 min**. Ganho: **+8 a 12 pts**.
 

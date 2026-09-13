@@ -1,0 +1,16 @@
+# Credenciais — NUNCA commitar.
+# A chave da Places API mora aqui e é lida por js/scripts/fetch-reviews.js.
+.env
+.env.*
+!.env.example
+
+# Source map do CSS: o bundle.min.css nao aponta pra ele, e nunca foi
+# publicado. O build regenera quando precisar.
+css/bundle.min.css.map
+
+# Dependências
+node_modules/
+
+# Sistema operacional
+Thumbs.db
+.DS_Store

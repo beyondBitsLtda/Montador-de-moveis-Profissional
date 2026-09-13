@@ -9,10 +9,10 @@
 1. O HTML agora carrega **5 blocos de Schema.org** (LocalBusiness, WebSite, FAQPage, Service, Review) → estrelas amarelas direto no Google, painel lateral e FAQs expansíveis nos resultados.
 2. Meta tags completas (Open Graph, Twitter, geo, robots, theme) → o link compartilhado em WhatsApp/Facebook agora tem capa, título e descrição decentes.
 3. Criados `robots.txt`, `sitemap.xml`, `site.webmanifest` → Google encontra o site mais rápido e indexa melhor.
-4. `vercel.json` ganhou **Cache-Control imutável** e **headers de segurança** (HSTS, X-Content-Type-Options) → +pontos em Lighthouse e ranking.
+4. ~~`vercel.json` com **Cache-Control imutável** e **headers de segurança**~~ → **não vale mais.** O site migrou para o GitHub Pages, que não permite configurar headers HTTP. Veja a seção 2.4.
 5. Adicionada seção **FAQ discreta** com 6 perguntas que são keywords reais de busca local.
 
-**Cuidado:** todas as URLs absolutas (canonical, og:url, JSON-LD, sitemap, robots) usam `https://montador-pro.vercel.app/` como **placeholder**. Substitua pelo domínio real assim que ele estiver ativo.
+**Estado atual:** todas as URLs absolutas (canonical, og:url, JSON-LD, sitemap, robots) apontam para `https://beyondbitsltda.github.io/Montador-de-moveis-Profissional/`, que é onde o site está no ar de verdade. Se um dia registrar um domínio próprio, veja a seção 3.1.
 
 ---
 
@@ -98,17 +98,21 @@ Cada `<details>` da seção FAQ tem uma pergunta/resposta correspondente nesse J
 - **Section tabs** ganhou link para `#faq`.
 - **Footer** com lista expandida de áreas atendidas — Google ranqueia para cada nome de cidade/bairro que aparece como texto puro.
 
-### 2.4. `vercel.json` — Headers HTTP
+### 2.4. ⚠️ Headers HTTP — perdidos na migração
 
-| Header | O que faz | Impacto SEO |
+Na Vercel, o `vercel.json` definia os headers abaixo. **O GitHub Pages não permite configurar header HTTP nenhum**, então esse arquivo foi removido e nada disso está ativo hoje:
+
+| Header | O que fazia | Situação no Pages |
 |---|---|---|
-| `Cache-Control: max-age=31536000, immutable` | Cache de 1 ano para CSS/JS/imagens | LCP, FID melhores → ranking sobe |
-| `Strict-Transport-Security` | Força HTTPS sempre | Confiabilidade, +pontos Lighthouse |
-| `X-Content-Type-Options: nosniff` | Anti MIME-sniffing | Segurança, +pontos Lighthouse |
-| `X-Frame-Options: SAMEORIGIN` | Impede iframe externo | Anti-cloaking |
-| `Referrer-Policy: strict-origin-when-cross-origin` | Privacidade | +pontos Lighthouse |
-| `Permissions-Policy` | Bloqueia features que o site não usa | +pontos Lighthouse |
-| `cleanUrls: true` | Remove `.html` da URL | URLs mais limpas, indexação consistente |
+| `Cache-Control: max-age=31536000, immutable` | Cache de 1 ano para CSS/JS/imagens | Perdido. O Pages usa um cache curto próprio (~10 min) |
+| `Strict-Transport-Security` | Forçava HTTPS sempre | Perdido. O Pages já serve HTTPS e redireciona, mas sem HSTS |
+| `X-Content-Type-Options: nosniff` | Anti MIME-sniffing | Perdido, sem equivalente |
+| `X-Frame-Options: SAMEORIGIN` | Impedia iframe externo | Perdido. Dá pra mitigar com CSP `frame-ancestors` via `<meta>` |
+| `Referrer-Policy` | Privacidade | Recuperável com `<meta name="referrer">` no `<head>` |
+| `Permissions-Policy` | Bloqueia features não usadas | Perdido, sem equivalente |
+| `cleanUrls: true` | Removia `.html` da URL | Não faz falta: o Pages já serve `/` sem `.html` |
+
+Só um proxy na frente (Cloudflare, por exemplo) devolveria esse controle. Para um site de página única, o impacto prático é pequeno — mas é bom saber que foi perdido.
 
 ### 2.5. Arquivos novos na raiz
 
@@ -124,19 +128,24 @@ Cada `<details>` da seção FAQ tem uma pergunta/resposta correspondente nesse J
 
 Coisas que **não consegui fazer por você** e que multiplicam o impacto de tudo acima.
 
-### 3.1. ⚠️ Substituir o domínio placeholder
+### 3.1. Registrar um domínio próprio
 
-Procure e substitua `https://montador-pro.vercel.app` pelo seu domínio real em **5 arquivos**:
+Hoje as URLs absolutas apontam para `https://beyondbitsltda.github.io/Montador-de-moveis-Profissional`. Funciona, mas um domínio próprio vale o investimento (veja a seção sobre isso mais abaixo).
+
+Ao registrar um, procure e substitua essa URL em **4 arquivos**:
 
 ```
-index.html       (canonical, og:url, og:image, twitter:image, 3 blocos JSON-LD)
+index.html       (canonical, og:url, og:image, twitter:image, blocos JSON-LD)
 robots.txt       (Sitemap:)
 sitemap.xml      (<loc> e hreflang)
-site.webmanifest (não tem URL absoluta — só revisar)
 SEO.md           (esse aqui — opcional)
 ```
 
+Depois crie um arquivo `CNAME` na raiz do repositório contendo só o domínio (ex: `montadorbh.com.br`) e aponte o DNS conforme a documentação do GitHub Pages.
+
 Recomendo usar o find/replace do VS Code (Ctrl+Shift+H).
+
+> **Atenção ao `robots.txt`:** num site de *projeto* do GitHub Pages (`usuario.github.io/repo/`), o `robots.txt` do repositório **é ignorado** pelos crawlers — eles só leem o da raiz do domínio, que pertence a outro repositório. Enquanto não houver domínio próprio, envie o `sitemap.xml` direto no Google Search Console em vez de contar com a linha `Sitemap:`.
 
 ### 3.2. Ícones de favicon (importante para Lighthouse e UX)
 
@@ -190,11 +199,13 @@ Esse é o **fator de ranking número 1** para local search. Sem ele, você fica 
 
 Já mencionei — vale repetir. Um domínio próprio (`.com.br`) tem **3 vantagens diretas de SEO**:
 
-1. **Confiança** — usuários e o Google confiam mais em `.com.br` que em `.vercel.app`
+1. **Confiança** — usuários e o Google confiam mais em `.com.br` que em `.github.io`
 2. **Ranking** — o Google tem viés para domínios brasileiros em buscas locais BR
-3. **Brand recall** — *"vou no .vercel.app/montador-pro"* é horrível de lembrar/digitar; *"vou no montadorbh.com.br"* é fácil
+3. **Brand recall** — *"vou no beyondbitsltda.github.io/Montador-de-moveis-Profissional"* é impossível de ditar no telefone; *"vou no montadorbh.com.br"* é fácil
 
-**Custo:** R$ 40/ano no Registro.br. **Instalação na Vercel:** 5 cliques + ajuste de DNS, SSL automático.
+No GitHub Pages tem um quarto motivo: com domínio próprio o site passa a ser servido na **raiz** do domínio, e aí o `robots.txt` volta a valer (veja a nota na seção 3.1).
+
+**Custo:** R$ 40/ano no Registro.br. **Instalação no GitHub Pages:** criar um `CNAME`, apontar o DNS para os IPs do GitHub, SSL automático via Let's Encrypt.
 
 ---
 
@@ -296,7 +307,7 @@ Quando o que foi feito estiver no ar e validado, esses são os movimentos para s
 | Adicionou pergunta na FAQ | **AMBOS**: `<details>` no HTML E `mainEntity` no JSON-LD FAQPage |
 | Edita reviews (do código) | `review` no JSON-LD + cards visíveis |
 | Mudou nota agregada (via Reviews API) | `aggregateRating.ratingValue` e `reviewCount` no JSON-LD |
-| Trocou domínio | Find/replace `montador-pro.vercel.app` em tudo |
+| Trocou domínio | Find/replace `beyondbitsltda.github.io/Montador-de-moveis-Profissional` em tudo + criar `CNAME` na raiz |
 
 > Recomendação: criar um `git tag` chamado `seo-v1` agora, pra ter um ponto de comparação caso algo dê errado depois.
 
@@ -325,23 +336,38 @@ A integração que você já fez do Google Reviews mantém os 3 cards visíveis 
 
 Quando comprar o domínio:
 
-### Passo 1 — Vercel
-1. Vercel dashboard → seu projeto → **Settings** → **Domains**
-2. **Add Domain** → digitar `montadormoveisbh.com.br` (exemplo)
-3. Vercel mostra **2 nameservers** do tipo `ns1.vercel-dns.com`
+### Passo 1 — Registro.br (ou onde você comprou)
+Crie estes registros de DNS apontando para o GitHub:
 
-### Passo 2 — Registro.br (ou onde você comprou)
-1. Login → seus domínios → editar DNS
-2. Mudar para **DNS personalizado** → colar os nameservers que a Vercel deu
-3. Salvar. Propagação leva de minutos a algumas horas.
+| Tipo | Nome | Valor |
+|---|---|---|
+| `A` | `@` | `185.199.108.153` |
+| `A` | `@` | `185.199.109.153` |
+| `A` | `@` | `185.199.110.153` |
+| `A` | `@` | `185.199.111.153` |
+| `CNAME` | `www` | `beyondbitsltda.github.io.` |
+
+Propagação leva de minutos a algumas horas. Confira os IPs atuais na documentação do GitHub Pages antes — eles mudam raramente, mas mudam.
+
+### Passo 2 — No repositório
+1. Crie um arquivo `CNAME` na raiz contendo **só** o domínio, sem `https://` e sem barra:
+
+```
+montadormoveisbh.com.br
+```
+
+2. No GitHub: **Settings → Pages → Custom domain** → digite o mesmo domínio → **Save**
+3. Espere o check de DNS passar e marque **Enforce HTTPS** (o certificado sai sozinho, pode levar alguns minutos).
 
 ### Passo 3 — No código
-Find/replace `https://montador-pro.vercel.app` → `https://montadormoveisbh.com.br` nestes arquivos:
+Find/replace `https://beyondbitsltda.github.io/Montador-de-moveis-Profissional` → `https://montadormoveisbh.com.br` nestes arquivos:
 - `index.html`
 - `robots.txt`
 - `sitemap.xml`
 
-Faça commit, push, deploy automático.
+Repare que a URL nova **não tem subpasta**. Os caminhos relativos do site (`css/`, `js/`, `reviews.json`, `galeria-manifest.json`) continuam funcionando nos dois casos — foi por isso que eles são relativos.
+
+Faça commit e push.
 
 ### Passo 4 — Search Console
 1. Adicione **a nova propriedade** (não delete a antiga ainda).
@@ -360,7 +386,7 @@ O que está no ar **agora**:
 - 3 blocos JSON-LD validáveis (LocalBusiness, WebSite, FAQPage)
 - Meta tags completas para social sharing
 - Robots, sitemap, manifest na raiz
-- Cache + security headers via Vercel
+- Caminhos relativos, funcionam tanto na subpasta do Pages quanto num domínio próprio
 - FAQ discreta com queries reais de busca
 
 O que **só você pode fazer agora**:
