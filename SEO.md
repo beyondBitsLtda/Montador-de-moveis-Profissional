@@ -12,7 +12,7 @@
 4. ~~`vercel.json` com **Cache-Control imutável** e **headers de segurança**~~ → **não vale mais.** O site migrou para o GitHub Pages, que não permite configurar headers HTTP. Veja a seção 2.4.
 5. Adicionada seção **FAQ discreta** com 6 perguntas que são keywords reais de busca local.
 
-**Estado atual:** todas as URLs absolutas (canonical, og:url, JSON-LD, sitemap, robots) apontam para `https://beyondbitsltda.github.io/Montador-de-moveis-Profissional/`, que é onde o site está no ar de verdade. Se um dia registrar um domínio próprio, veja a seção 3.1.
+**Estado atual:** todas as URLs absolutas (canonical, og:url, JSON-LD, sitemap, robots) apontam para `https://aluisiomontadordemoveis.com.br/`, que é onde o site está no ar de verdade. Se um dia registrar um domínio próprio, veja a seção 3.1.
 
 ---
 
@@ -128,24 +128,23 @@ Só um proxy na frente (Cloudflare, por exemplo) devolveria esse controle. Para 
 
 Coisas que **não consegui fazer por você** e que multiplicam o impacto de tudo acima.
 
-### 3.1. Registrar um domínio próprio
+### 3.1. ✅ Domínio próprio — feito
 
-Hoje as URLs absolutas apontam para `https://beyondbitsltda.github.io/Montador-de-moveis-Profissional`. Funciona, mas um domínio próprio vale o investimento (veja a seção sobre isso mais abaixo).
+O site usa `https://aluisiomontadordemoveis.com.br`. O passo a passo completo da configuração (Registro.br + GitHub Pages) está em **[SETUP-DOMINIO.md](SETUP-DOMINIO.md)**.
 
-Ao registrar um, procure e substitua essa URL em **4 arquivos**:
+Se um dia o domínio mudar, troque a URL em **5 lugares**:
 
 ```
+CNAME            (só o domínio, sem https:// e sem barra)
 index.html       (canonical, og:url, og:image, twitter:image, blocos JSON-LD)
 robots.txt       (Sitemap:)
 sitemap.xml      (<loc> e hreflang)
 SEO.md           (esse aqui — opcional)
 ```
 
-Depois crie um arquivo `CNAME` na raiz do repositório contendo só o domínio (ex: `montadorbh.com.br`) e aponte o DNS conforme a documentação do GitHub Pages.
-
 Recomendo usar o find/replace do VS Code (Ctrl+Shift+H).
 
-> **Atenção ao `robots.txt`:** num site de *projeto* do GitHub Pages (`usuario.github.io/repo/`), o `robots.txt` do repositório **é ignorado** pelos crawlers — eles só leem o da raiz do domínio, que pertence a outro repositório. Enquanto não houver domínio próprio, envie o `sitemap.xml` direto no Google Search Console em vez de contar com a linha `Sitemap:`.
+> **Efeito colateral bom:** com domínio próprio o site passa a ser servido na **raiz**, então o `robots.txt` do repositório finalmente vale. Enquanto o site estava em `usuario.github.io/repo/`, os crawlers ignoravam esse arquivo — eles só leem o da raiz do domínio.
 
 ### 3.2. Ícones de favicon (importante para Lighthouse e UX)
 
@@ -195,15 +194,15 @@ Esse é o **fator de ranking número 1** para local search. Sem ele, você fica 
 
 > 💡 **Importante:** os dados no Google Meu Negócio precisam ser **idênticos** aos do JSON-LD do site (nome, telefone, áreas). Isso é o que o Google chama de **NAP consistency**.
 
-### 3.5. Considerar comprar domínio próprio
+### 3.5. Por que o domínio próprio valeu a pena
 
-Já mencionei — vale repetir. Um domínio próprio (`.com.br`) tem **3 vantagens diretas de SEO**:
+Registrado em 21/09/2026. Um domínio próprio (`.com.br`) tem **3 vantagens diretas de SEO**:
 
 1. **Confiança** — usuários e o Google confiam mais em `.com.br` que em `.github.io`
 2. **Ranking** — o Google tem viés para domínios brasileiros em buscas locais BR
-3. **Brand recall** — *"vou no beyondbitsltda.github.io/Montador-de-moveis-Profissional"* é impossível de ditar no telefone; *"vou no montadorbh.com.br"* é fácil
+3. **Brand recall** — *"vou no beyondbitsltda.github.io/Montador-de-moveis-Profissional"* era impossível de ditar no telefone; *"vou no aluisiomontadordemoveis.com.br"* é fácil
 
-No GitHub Pages tem um quarto motivo: com domínio próprio o site passa a ser servido na **raiz** do domínio, e aí o `robots.txt` volta a valer (veja a nota na seção 3.1).
+No GitHub Pages teve um quarto motivo: com domínio próprio o site passa a ser servido na **raiz** do domínio, e aí o `robots.txt` voltou a valer (veja a nota na seção 3.1).
 
 **Custo:** R$ 40/ano no Registro.br. **Instalação no GitHub Pages:** criar um `CNAME`, apontar o DNS para os IPs do GitHub, SSL automático via Let's Encrypt.
 
@@ -307,7 +306,7 @@ Quando o que foi feito estiver no ar e validado, esses são os movimentos para s
 | Adicionou pergunta na FAQ | **AMBOS**: `<details>` no HTML E `mainEntity` no JSON-LD FAQPage |
 | Edita reviews (do código) | `review` no JSON-LD + cards visíveis |
 | Mudou nota agregada (via Reviews API) | `aggregateRating.ratingValue` e `reviewCount` no JSON-LD |
-| Trocou domínio | Find/replace `beyondbitsltda.github.io/Montador-de-moveis-Profissional` em tudo + criar `CNAME` na raiz |
+| Trocou domínio | Find/replace `aluisiomontadordemoveis.com.br` em tudo + atualizar o arquivo `CNAME` |
 
 > Recomendação: criar um `git tag` chamado `seo-v1` agora, pra ter um ponto de comparação caso algo dê errado depois.
 
@@ -360,7 +359,7 @@ montadormoveisbh.com.br
 3. Espere o check de DNS passar e marque **Enforce HTTPS** (o certificado sai sozinho, pode levar alguns minutos).
 
 ### Passo 3 — No código
-Find/replace `https://beyondbitsltda.github.io/Montador-de-moveis-Profissional` → `https://montadormoveisbh.com.br` nestes arquivos:
+Find/replace `https://aluisiomontadordemoveis.com.br` → `https://montadormoveisbh.com.br` nestes arquivos:
 - `index.html`
 - `robots.txt`
 - `sitemap.xml`

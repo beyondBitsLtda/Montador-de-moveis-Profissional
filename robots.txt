@@ -1,5 +1,5 @@
 # robots.txt — Montador de Móveis Profissional
-# https://beyondbitsltda.github.io/Montador-de-moveis-Profissional/
+# https://aluisiomontadordemoveis.com.br/
 
 User-agent: *
 Allow: /
@@ -13,4 +13,4 @@ Allow: /
 # Disallow: /
 
 # Sitemap
-Sitemap: https://beyondbitsltda.github.io/Montador-de-moveis-Profissional/sitemap.xml
+Sitemap: https://aluisiomontadordemoveis.com.br/sitemap.xml
