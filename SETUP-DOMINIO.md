@@ -46,19 +46,23 @@ Fazendo DNS primeiro, a troca é sem interrupção.
 
 Os quatro `A` são os IPs do GitHub Pages — confirmados em `api.github.com/meta` no dia 22/09/2026. Os quatro `AAAA` são os equivalentes IPv6. O `CNAME` do `www` faz o endereço com `www.` funcionar também.
 
+> ⚠️ **Cada linha da tabela é uma entrada separada.** O formulário "Nova entrada" guarda **um** registro por vez, com **um** IP no campo. Você vai abri-lo 9 vezes. Não tente colar os quatro IPs juntos no mesmo campo — o painel rejeita, e com razão.
+
+> ⚠️ **O campo "Nome" deve ficar VAZIO para o domínio raiz.** O painel do Registro.br mostra `.aluisiomontadordemoveis.com.br` ao lado do campo, ou seja, ele concatena o domínio ao que você digitar. Digitar `@` ali produz `@.aluisiomontadordemoveis.com.br`, que está errado. O `@` só vale no modo avançado (arquivo de zona), onde não há sufixo automático.
+
 | Nome | Tipo | Valor |
 |---|---|---|
-| *(vazio, ou `@`)* | `A` | `185.199.108.153` |
-| *(vazio, ou `@`)* | `A` | `185.199.109.153` |
-| *(vazio, ou `@`)* | `A` | `185.199.110.153` |
-| *(vazio, ou `@`)* | `A` | `185.199.111.153` |
-| *(vazio, ou `@`)* | `AAAA` | `2606:50c0:8000::153` |
-| *(vazio, ou `@`)* | `AAAA` | `2606:50c0:8001::153` |
-| *(vazio, ou `@`)* | `AAAA` | `2606:50c0:8002::153` |
-| *(vazio, ou `@`)* | `AAAA` | `2606:50c0:8003::153` |
+| *(vazio)* | `A` | `185.199.108.153` |
+| *(vazio)* | `A` | `185.199.109.153` |
+| *(vazio)* | `A` | `185.199.110.153` |
+| *(vazio)* | `A` | `185.199.111.153` |
+| *(vazio)* | `AAAA` | `2606:50c0:8000::153` |
+| *(vazio)* | `AAAA` | `2606:50c0:8001::153` |
+| *(vazio)* | `AAAA` | `2606:50c0:8002::153` |
+| *(vazio)* | `AAAA` | `2606:50c0:8003::153` |
 | `www` | `CNAME` | `beyondbitsltda.github.io.` |
 
-> **Nome vazio = o domínio raiz** (`aluisiomontadordemoveis.com.br`, sem `www`). Alguns painéis chamam de `@`, outros pedem o campo em branco. É a mesma coisa.
+> **Nome vazio = o domínio raiz** (`aluisiomontadordemoveis.com.br`, sem `www`). No formulário do Registro.br, que já mostra o sufixo do domínio ao lado do campo, o correto é deixar em branco.
 
 > **O ponto final em `beyondbitsltda.github.io.` não é erro de digitação.** Ele diz ao DNS que o nome é absoluto. Sem o ponto, alguns servidores interpretam como `beyondbitsltda.github.io.aluisiomontadordemoveis.com.br` e o `www` não funciona. Se o painel não aceitar o ponto, pode tirar — ele já trata isso internamente.
 
@@ -183,6 +187,8 @@ O site funciona igual na raiz e em subpasta porque todos os caminhos internos s�
 | Sintoma | Causa | Solução |
 |---|---|---|
 | GitHub: *"Domain does not resolve to the GitHub Pages server"* | DNS ainda propagando, ou registro digitado errado | Confira os 4 IPs no Registro.br e clique em **Check again** |
+| Campo de IP fica vermelho no Registro.br | Mais de um IP colado no mesmo campo | Um registro por entrada: abra o formulário 4 vezes, um IP em cada |
+| Registro criado como `@.aluisiomontadordemoveis.com.br` | `@` digitado num campo que já concatena o domínio | Apague o registro e recrie com o campo **Nome** vazio |
 | GitHub: *"Domain is already taken"* | O domínio está configurado em outro repositório | Remova de lá primeiro; um domínio serve um site só |
 | **Enforce HTTPS** continua acinzentado | Certificado ainda não emitido | Espere. Passando de 1h, remova e recoloque o domínio |
 | Site abre sem estilo, ou galeria vazia | Cache do navegador com a versão antiga | Ctrl+Shift+R, ou janela anônima |
