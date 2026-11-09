@@ -64,10 +64,9 @@
   <meta name="twitter:image:alt" content="Cozinha planejada montada profissionalmente" />
 
   <!-- ═══════ Favicons e manifest PWA-leve ═══════ -->
-  <!-- Veja SEO.md, seção "Ícones": como gerar os PNG de favicons a partir
-       do logo. Enquanto não gerar, o navegador cai para o favicon padrão
-       e nada quebra.                                                       -->
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <!-- Gerados a partir do símbolo da logo oficial (logo/). Veja SEO.md,
+       seção "Ícones".                                                      -->
+  <link rel="icon" href="favicon.ico" sizes="48x48" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
@@ -349,7 +348,7 @@
     "image": [
       "https://aluisiomontadordemoveis.com.br/images/hero-cozinha.png"
     ],
-    "logo": "https://aluisiomontadordemoveis.com.br/images/hero-cozinha.png",
+    "logo": "https://aluisiomontadordemoveis.com.br/images/logo-quadrado.png",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Ribeirão das Neves",
@@ -603,11 +602,16 @@
   <header class="site-header" data-screen-label="Header">
     <div class="container site-header__inner">
       <a href="#topo" class="brand" aria-label="Página inicial — Montador de Móveis Profissional">
-        <span class="brand__mark" aria-hidden="true">M</span>
-        <span class="brand__name">
-          <span>Montador de Móveis</span>
-          <span>Profissional</span>
-        </span>
+        <!-- Logo oficial, versão para fundo escuro (transparente).
+             Os arquivos-fonte ficam em logo/. -->
+        <picture>
+          <source srcset="images/logo-horizontal-fundo-escuro.webp" type="image/webp" />
+          <img src="images/logo-horizontal-fundo-escuro.png"
+               alt="Montador de Móveis Profissional"
+               class="brand__logo"
+               width="551" height="160"
+               decoding="async" />
+        </picture>
       </a>
 
       <nav class="nav" aria-label="Navegação principal">
@@ -1053,11 +1057,15 @@
 
       <div>
         <a href="#topo" class="brand" style="margin-bottom: var(--space-4);" aria-label="Voltar ao topo">
-          <span class="brand__mark" aria-hidden="true">M</span>
-          <span class="brand__name">
-            <span>Montador de Móveis</span>
-            <span>Profissional</span>
-          </span>
+          <picture>
+            <source srcset="images/logo-vertical-fundo-escuro.webp" type="image/webp" />
+            <img src="images/logo-vertical-fundo-escuro.png"
+                 alt="Montador de Móveis Profissional"
+                 class="brand__logo brand__logo--vertical"
+                 width="480" height="628"
+                 loading="lazy"
+                 decoding="async" />
+          </picture>
         </a>
         <p style="color: var(--color-text-dim); max-width: 36ch; margin-top: var(--space-4); font-size: var(--fs-small);">
           Serviço local de montagem e desmontagem de móveis. Atendimento direto,
