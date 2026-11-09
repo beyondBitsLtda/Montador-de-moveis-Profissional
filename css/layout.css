@@ -53,33 +53,19 @@ section {
   color: var(--color-text);
 }
 
-.brand__mark {
-  width: 40px; height: 40px;
-  background: var(--color-accent);
-  color: var(--color-bg);
-  display: grid; place-items: center;
-  border-radius: var(--radius-sm);
-  font-family: var(--font-display);
-  font-size: 1.1rem;
+/* Logo oficial (PNG/WebP transparente, versão para fundo escuro) */
+.brand__logo {
+  height: 44px;
+  width: auto;
 }
 
-.brand__name {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-  font-family: var(--font-display);
-  text-transform: uppercase;
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
+@media (min-width: 880px) {
+  .brand__logo { height: 52px; }
 }
 
-.brand__name span:last-child {
-  font-family: var(--font-mono);
-  font-weight: 400;
-  font-size: 0.6rem;
-  margin-top: 4px;
-  color: var(--color-accent);
-  letter-spacing: 0.16em;
+.brand__logo--vertical {
+  height: auto;
+  width: 140px;
 }
 
 .nav {

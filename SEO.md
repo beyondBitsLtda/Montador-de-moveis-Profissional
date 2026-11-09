@@ -148,20 +148,27 @@ Recomendo usar o find/replace do VS Code (Ctrl+Shift+H).
 
 ### 3.2. Ícones de favicon (importante para Lighthouse e UX)
 
-Hoje você só tem o `images/hero-cozinha.png`. Para o `<link rel="icon">` e o manifest funcionarem, gere esses arquivos e coloque na **raiz** do projeto:
+✅ **Feito.** Os ícones foram gerados a partir do símbolo da logo oficial (hexágono "M" + parafusadeira, amarelo `#FFD800` sobre o preto da marca `#0E0E0E`) e estão na **raiz** do projeto:
 
 | Arquivo | Tamanho |
 |---|---|
-| `favicon.ico` | 32×32 |
-| `favicon.svg` | vetor (ideal) |
+| `favicon.ico` | 16, 32 e 48 px no mesmo arquivo |
 | `favicon-16x16.png` | 16×16 |
 | `favicon-32x32.png` | 32×32 |
-| `apple-touch-icon.png` | 180×180 |
+| `apple-touch-icon.png` | 180×180 (opaco, o iOS arredonda sozinho) |
 | `android-chrome-192x192.png` | 192×192 |
 | `android-chrome-512x512.png` | 512×512 |
-| `android-chrome-maskable-512x512.png` | 512×512 (com padding interno) |
+| `android-chrome-maskable-512x512.png` | 512×512 (símbolo dentro do círculo seguro de 80%) |
 
-**Gerador rápido (gratuito):** https://realfavicongenerator.net/ — você sobe uma imagem do logo (recomendo a letra "M" estilizada ou um ícone de chave de fenda), ele gera todos os tamanhos prontos pra download.
+As logos usadas no site ficam em `images/`, derivadas dos originais de `logo/`:
+
+| Arquivo | Onde aparece |
+|---|---|
+| `logo-horizontal-fundo-escuro.webp/.png` | Cabeçalho. Fundo transparente, texto off-white e "PROFISSIONAL" em amarelo — montada a partir da horizontal oficial com as cores da vertical fundo preto |
+| `logo-vertical-fundo-escuro.webp/.png` | Rodapé. A vertical fundo preto oficial, com o preto transparente |
+| `logo-quadrado.png` | `"logo"` do JSON-LD (Google). A vertical fundo preto em quadrado 600×600 |
+
+Se a logo mudar, troque os arquivos em `logo/` e gere de novo todos os derivados acima, mantendo os mesmos nomes — o HTML e o manifest não precisam mudar.
 
 ### 3.3. Google Search Console (CRÍTICO)
 
